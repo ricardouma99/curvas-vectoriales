@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visualizador de funciones vectoriales</title>
+<script src="https://cdn.plot.ly/plotly-3.1.0.min.js"></script>
+<style>
+:root{
+  --bg:#f5f7fb; --panel:#fff; --text:#172033; --muted:#667085;
+  --border:#d8dee9; --accent:#3157d5; --accent2:#eef2ff; --danger:#b42318;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:24px 24px 8px;max-width:1250px;margin:auto}
+header h1{margin:0 0 6px;font-size:clamp(1.5rem,3vw,2.2rem)}
+header p{margin:0;color:var(--muted)}
+main{max-width:1250px;margin:auto;padding:20px 24px 36px;display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px}
+.controls{display:flex;flex-direction:column;gap:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:.9rem;font-weight:650;margin-bottom:6px}
+input,button{font:inherit}
+input[type=text],input[type=number]{width:100%;padding:10px 11px;border:1px solid var(--border);border-radius:9px;background:white;color:var(--text)}
+input[type=range]{width:100%}
+button{min-height:42px;border:1px solid var(--border);border-radius:9px;background:white;color:var(--text);cursor:pointer;font-weight:650}
+button.primary,.active{background:var(--accent);color:white;border-color:var(--accent)}
+button:hover{filter:brightness(.98)}
+.space-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#plot{width:100%;height:570px}
+.graph-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:4px}
+.formula{font-weight:700;overflow-wrap:anywhere}
+.small{font-size:.88rem;color:var(--muted)}
+.coords{background:var(--accent2);padding:10px;border-radius:9px;line-height:1.55}
+#error{color:var(--danger);min-height:20px}
+.help{max-width:1250px;margin:-18px auto 30px;padding:0 24px;color:var(--muted);font-size:.9rem}
+code{background:#eef1f6;padding:2px 5px;border-radius:5px}
+@media(max-width:800px){main{grid-template-columns:1fr;padding:14px}header{padding:18px 14px 4px}.help{padding:0 14px}#plot{height:460px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Visualizador de funciones vectoriales</h1>
+  <p>Explora curvas parametrizadas en ℝ² y ℝ³ mediante el parámetro <em>t</em>.</p>
+</header>
+
+<main>
+<section class="card controls">
+  <div>
+    <label>Espacio</label>
+    <div class="space-buttons">
+      <button id="btn2" type="button">ℝ²</button>
+      <button id="btn3" type="button" class="active">ℝ³</button>
+    </div>
+  </div>
+
+  <div>
+    <label for="fx">x(t)</label>
+    <input id="fx" type="text" value="cos(t)">
+  </div>
+  <div>
+    <label for="fy">y(t)</label>
+    <input id="fy" type="text" value="sin(t)">
+  </div>
+  <div id="zGroup">
+    <label for="fz">z(t)</label>
+    <input id="fz" type="text" value="t/3">
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="tmin">t mínimo</label>
+      <input id="tmin" type="number" step="0.1" value="-12.566">
+    </div>
+    <div>
+      <label for="tmax">t máximo</label>
+      <input id="tmax" type="number" step="0.1" value="12.566">
+    </div>
+  </div>
+
+  <button id="draw" class="primary" type="button">Graficar</button>
+
+  <div>
+    <label for="slider">Explorar el parámetro t</label>
+    <input id="slider" type="range" min="0" max="1000" value="500">
+    <div id="tValue" class="small">t = 0.000</div>
+  </div>
+
+  <div id="coords" class="coords"></div>
+  <div id="error" class="small"></div>
+
+  <div class="small">
+    Funciones admitidas: <code>sin</code>, <code>cos</code>, <code>tan</code>,
+    <code>sqrt</code>, <code>abs</code>, <code>exp</code>, <code>log</code>,
+    <code>pi</code>. Para potencias puedes escribir <code>t^2</code>.
+  </div>
+</section>
+
+<section class="card">
+  <div class="graph-head">
+    <div>
+      <div id="formula" class="formula"></div>
+      <div id="subtitle" class="small">Curva parametrizada en ℝ³</div>
+    </div>
+    <button id="reset" type="button">Restablecer vista</button>
+  </div>
+  <div id="plot"></div>
+</section>
+</main>
+
+<div class="help">
+  El punto <strong>P(t)</strong> se desplaza sobre la trayectoria al mover el deslizador.
+  En ℝ³ puedes arrastrar la gráfica para rotarla y usar la rueda del ratón para acercarte o alejarte.
+</div>
+
+<script>
+let dimension = 3;
+let functions = null;
+
+const $ = id => document.getElementById(id);
+const fx = $("fx"), fy = $("fy"), fz = $("fz");
+const tmin = $("tmin"), tmax = $("tmax"), slider = $("slider");
+
+function compileExpression(source) {
+  let s = source.trim().toLowerCase();
+  s = s.replace(/\^/g, "**");
+  s = s.replace(/\bpi\b/g, "Math.PI");
+  s = s.replace(/\bln\b/g, "Math.log");
+  const names = ["sin","cos","tan","asin","acos","atan","sqrt","abs","exp","log",
+                 "floor","ceil","round","sinh","cosh","tanh"];
+  for (const name of names) {
+    s = s.replace(new RegExp("\\b" + name + "\\b", "g"), "Math." + name);
+  }
+  if (!/^[0-9t+\-*/().,\sA-Za-z]*$/.test(s)) {
+    throw new Error("La expresión contiene símbolos no admitidos.");
+  }
+  return new Function("t", '"use strict"; return (' + s + ');');
+}
+
+function setDimension(d) {
+  dimension = d;
+  $("zGroup").style.display = d === 3 ? "block" : "none";
+  $("btn2").classList.toggle("active", d === 2);
+  $("btn3").classList.toggle("active", d === 3);
+  draw();
+}
+
+function currentT() {
+  const a = Number(tmin.value), b = Number(tmax.value);
+  return a + (b-a) * Number(slider.value)/1000;
+}
+
+function calculate() {
+  const a = Number(tmin.value), b = Number(tmax.value);
+  if (!Number.isFinite(a) || !Number.isFinite(b) || a >= b) {
+    throw new Error("Debe cumplirse t mínimo < t máximo.");
+  }
+
+  const X = compileExpression(fx.value);
+  const Y = compileExpression(fy.value);
+  const Z = dimension === 3 ? compileExpression(fz.value) : () => 0;
+
+  const xs=[], ys=[], zs=[];
+  const N=900;
+  for(let i=0;i<=N;i++){
+    const t=a+(b-a)*i/N;
+    const x=X(t), y=Y(t), z=Z(t);
+    xs.push(Number.isFinite(x) ? x : null);
+    ys.push(Number.isFinite(y) ? y : null);
+    zs.push(Number.isFinite(z) ? z : null);
+  }
+  return {X,Y,Z,xs,ys,zs};
+}
+
+function graphLayout() {
+  const common = {
+    margin:{l:50,r:20,b:50,t:15},
+    paper_bgcolor:"rgba(0,0,0,0)",
+    plot_bgcolor:"rgba(0,0,0,0)",
+    showlegend:false
+  };
+  if(dimension===3){
+    return {
+      ...common,
+      margin:{l:0,r:0,b:0,t:5},
+      scene:{
+        xaxis:{title:"x"},
+        yaxis:{title:"y"},
+        zaxis:{title:"z"},
+        aspectmode:"data"
+      }
+    };
+  }
+  return {
+    ...common,
+    xaxis:{title:"x",zeroline:true},
+    yaxis:{title:"y",zeroline:true,scaleanchor:"x",scaleratio:1}
+  };
+}
+
+function fmt(v) {
+  return Number.isFinite(v) ? Number(v).toFixed(4) : "no definido";
+}
+
+function updatePoint(updateGraph=true) {
+  if(!functions) return;
+  try {
+    const t=currentT();
+    const x=functions.X(t), y=functions.Y(t), z=functions.Z(t);
+    $("tValue").textContent="t = "+t.toFixed(3);
+    $("coords").innerHTML = dimension===3
+      ? "<strong>P(t)</strong> = ("+fmt(x)+", "+fmt(y)+", "+fmt(z)+")"
+      : "<strong>P(t)</strong> = ("+fmt(x)+", "+fmt(y)+")";
+
+    if(updateGraph){
+      if(dimension===3){
+        Plotly.restyle("plot",{x:[[x]],y:[[y]],z:[[z]]},[1]);
+      }else{
+        Plotly.restyle("plot",{x:[[x]],y:[[y]]},[1]);
+      }
+    }
+  } catch(e) {
+    $("error").textContent="Error: "+e.message;
+  }
+}
+
+function draw() {
+  try {
+    $("error").textContent="";
+    functions=calculate();
+    const t=currentT();
+    const x=functions.X(t), y=functions.Y(t), z=functions.Z(t);
+
+    let data;
+    if(dimension===3){
+      data=[
+        {type:"scatter3d",mode:"lines",x:functions.xs,y:functions.ys,z:functions.zs,
+         line:{width:6},name:"Trayectoria"},
+        {type:"scatter3d",mode:"markers",x:[x],y:[y],z:[z],
+         marker:{size:7},name:"P(t)"}
+      ];
+    } else {
+      data=[
+        {type:"scatter",mode:"lines",x:functions.xs,y:functions.ys,
+         line:{width:3},name:"Trayectoria"},
+        {type:"scatter",mode:"markers",x:[x],y:[y],
+         marker:{size:10},name:"P(t)"}
+      ];
+    }
+
+    Plotly.react("plot",data,graphLayout(),{responsive:true,displaylogo:false});
+    $("formula").textContent = dimension===3
+      ? "r(t) = ⟨"+fx.value+", "+fy.value+", "+fz.value+"⟩"
+      : "r(t) = ⟨"+fx.value+", "+fy.value+"⟩";
+    $("subtitle").textContent="Curva parametrizada en "+(dimension===3 ? "ℝ³" : "ℝ²");
+    updatePoint(false);
+  } catch(e) {
+    $("error").textContent="Error: "+e.message;
+  }
+}
+
+$("btn2").addEventListener("click",()=>setDimension(2));
+$("btn3").addEventListener("click",()=>setDimension(3));
+$("draw").addEventListener("click",draw);
+slider.addEventListener("input",()=>updatePoint(true));
+
+$("reset").addEventListener("click",()=>{
+  if(dimension===3){
+    Plotly.relayout("plot",{"scene.camera":{eye:{x:1.25,y:1.25,z:1.25}}});
+  }else{
+    Plotly.relayout("plot",{"xaxis.autorange":true,"yaxis.autorange":true});
+  }
+});
+
+draw();
+</script>
+</body>
+</html>
