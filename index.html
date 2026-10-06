@@ -3,276 +3,1823 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Visualizador de funciones vectoriales</title>
+
+<!-- Plotly -->
 <script src="https://cdn.plot.ly/plotly-3.1.0.min.js"></script>
+
+<!-- MathLive -->
+<script type="module">
+  import "https://unpkg.com/mathlive?module";
+</script>
+
 <style>
+
 :root{
-  --bg:#f5f7fb; --panel:#fff; --text:#172033; --muted:#667085;
-  --border:#d8dee9; --accent:#3157d5; --accent2:#eef2ff; --danger:#b42318;
+  --bg:#f5f7fb;
+  --panel:#ffffff;
+  --text:#172033;
+  --muted:#667085;
+  --border:#d8dee9;
+  --accent:#3157d5;
+  --accent2:#eef2ff;
+  --danger:#b42318;
+  --success:#067647;
 }
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{padding:24px 24px 8px;max-width:1250px;margin:auto}
-header h1{margin:0 0 6px;font-size:clamp(1.5rem,3vw,2.2rem)}
-header p{margin:0;color:var(--muted)}
-main{max-width:1250px;margin:auto;padding:20px 24px 36px;display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px}
-.controls{display:flex;flex-direction:column;gap:14px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-label{display:block;font-size:.9rem;font-weight:650;margin-bottom:6px}
-input,button{font:inherit}
-input[type=text],input[type=number]{width:100%;padding:10px 11px;border:1px solid var(--border);border-radius:9px;background:white;color:var(--text)}
-input[type=range]{width:100%}
-button{min-height:42px;border:1px solid var(--border);border-radius:9px;background:white;color:var(--text);cursor:pointer;font-weight:650}
-button.primary,.active{background:var(--accent);color:white;border-color:var(--accent)}
-button:hover{filter:brightness(.98)}
-.space-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#plot{width:100%;height:570px}
-.graph-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:4px}
-.formula{font-weight:700;overflow-wrap:anywhere}
-.small{font-size:.88rem;color:var(--muted)}
-.coords{background:var(--accent2);padding:10px;border-radius:9px;line-height:1.55}
-#error{color:var(--danger);min-height:20px}
-.help{max-width:1250px;margin:-18px auto 30px;padding:0 24px;color:var(--muted);font-size:.9rem}
-code{background:#eef1f6;padding:2px 5px;border-radius:5px}
-@media(max-width:800px){main{grid-template-columns:1fr;padding:14px}header{padding:18px 14px 4px}.help{padding:0 14px}#plot{height:460px}}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  padding:24px 24px 8px;
+  max-width:1250px;
+  margin:auto;
+}
+
+header h1{
+  margin:0 0 6px;
+  font-size:clamp(1.5rem,3vw,2.2rem);
+}
+
+header p{
+  margin:0;
+  color:var(--muted);
+}
+
+main{
+  max-width:1250px;
+  margin:auto;
+  padding:20px 24px 36px;
+  display:grid;
+  grid-template-columns:330px minmax(0,1fr);
+  gap:18px;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+}
+
+.controls{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+label{
+  display:block;
+  font-size:.9rem;
+  font-weight:650;
+  margin-bottom:6px;
+}
+
+button,
+select{
+  font:inherit;
+}
+
+button{
+  min-height:42px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:white;
+  color:var(--text);
+  cursor:pointer;
+  font-weight:650;
+}
+
+button.primary,
+button.active{
+  background:var(--accent);
+  color:white;
+  border-color:var(--accent);
+}
+
+button:hover{
+  filter:brightness(.98);
+}
+
+select{
+  width:100%;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:white;
+}
+
+.space-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+/* MathLive */
+
+math-field{
+  width:100%;
+  min-height:45px;
+  padding:8px 10px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:white;
+  font-size:1.1rem;
+}
+
+math-field:focus-within{
+  outline:2px solid #aab9f3;
+  border-color:var(--accent);
+}
+
+/* Función vectorial */
+
+.vector-function{
+  background:#f8f9fc;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+}
+
+.vector-title{
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.component{
+  margin-bottom:10px;
+}
+
+.component:last-child{
+  margin-bottom:0;
+}
+
+/* Intervalo */
+
+.interval-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+/* gráfica */
+
+#plot{
+  width:100%;
+  height:570px;
+}
+
+.graph-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:8px;
+}
+
+.formula-display{
+  font-size:1.15rem;
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+
+.small{
+  font-size:.88rem;
+  color:var(--muted);
+}
+
+.coords{
+  background:var(--accent2);
+  padding:10px;
+  border-radius:9px;
+  line-height:1.55;
+}
+
+#error{
+  color:var(--danger);
+  min-height:20px;
+}
+
+.help{
+  max-width:1250px;
+  margin:-18px auto 30px;
+  padding:0 24px;
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+code{
+  background:#eef1f6;
+  padding:2px 5px;
+  border-radius:5px;
+}
+
+input[type=range]{
+  width:100%;
+}
+
+.example-info{
+  background:#f8f9fc;
+  border-radius:9px;
+  padding:10px;
+}
+
+@media(max-width:800px){
+
+  main{
+    grid-template-columns:1fr;
+    padding:14px;
+  }
+
+  header{
+    padding:18px 14px 4px;
+  }
+
+  .help{
+    padding:0 14px;
+  }
+
+  #plot{
+    height:460px;
+  }
+
+}
+
 </style>
 </head>
+
 <body>
+
 <header>
-  <h1>Visualizador de funciones vectoriales</h1>
-  <p>Explora curvas parametrizadas en ℝ² y ℝ³ mediante el parámetro <em>t</em>.</p>
+
+<h1>Visualizador de funciones vectoriales</h1>
+
+<p>
+Explora curvas parametrizadas en ℝ² y ℝ³ mediante el parámetro
+<em>t</em>.
+</p>
+
 </header>
 
 <main>
+
+<!-- ========================= -->
+<!-- PANEL DE CONTROL -->
+<!-- ========================= -->
+
 <section class="card controls">
-  <div>
-    <label>Espacio</label>
-    <div class="space-buttons">
-      <button id="btn2" type="button">ℝ²</button>
-      <button id="btn3" type="button" class="active">ℝ³</button>
-    </div>
-  </div>
 
-  <div>
-    <label for="fx">x(t)</label>
-    <input id="fx" type="text" value="cos(t)">
-  </div>
-  <div>
-    <label for="fy">y(t)</label>
-    <input id="fy" type="text" value="sin(t)">
-  </div>
-  <div id="zGroup">
-    <label for="fz">z(t)</label>
-    <input id="fz" type="text" value="t/3">
-  </div>
+<div>
 
-  <div class="row">
-    <div>
-      <label for="tmin">t mínimo</label>
-      <input id="tmin" type="number" step="0.1" value="-12.566">
-    </div>
-    <div>
-      <label for="tmax">t máximo</label>
-      <input id="tmax" type="number" step="0.1" value="12.566">
-    </div>
-  </div>
+<label>Espacio</label>
 
-  <button id="draw" class="primary" type="button">Graficar</button>
+<div class="space-buttons">
 
-  <div>
-    <label for="slider">Explorar el parámetro t</label>
-    <input id="slider" type="range" min="0" max="1000" value="500">
-    <div id="tValue" class="small">t = 0.000</div>
-  </div>
+<button id="btn2" type="button">
+ℝ²
+</button>
 
-  <div id="coords" class="coords"></div>
-  <div id="error" class="small"></div>
+<button id="btn3" type="button" class="active">
+ℝ³
+</button>
 
-  <div class="small">
-    Funciones admitidas: <code>sin</code>, <code>cos</code>, <code>tan</code>,
-    <code>sqrt</code>, <code>abs</code>, <code>exp</code>, <code>log</code>,
-    <code>pi</code>. Para potencias puedes escribir <code>t^2</code>.
-  </div>
-</section>
-
-<section class="card">
-  <div class="graph-head">
-    <div>
-      <div id="formula" class="formula"></div>
-      <div id="subtitle" class="small">Curva parametrizada en ℝ³</div>
-    </div>
-    <button id="reset" type="button">Restablecer vista</button>
-  </div>
-  <div id="plot"></div>
-</section>
-</main>
-
-<div class="help">
-  El punto <strong>P(t)</strong> se desplaza sobre la trayectoria al mover el deslizador.
-  En ℝ³ puedes arrastrar la gráfica para rotarla y usar la rueda del ratón para acercarte o alejarte.
 </div>
 
+</div>
+
+
+<!-- EJEMPLOS -->
+
+<div>
+
+<label for="examples">
+Ejemplos
+</label>
+
+<select id="examples">
+
+<option value="helix">
+Hélice
+</option>
+
+<option value="circle">
+Circunferencia
+</option>
+
+<option value="parabola">
+Parábola
+</option>
+
+<option value="sqrt">
+Curva con raíz cuadrada
+</option>
+
+<option value="cubic">
+Curva cúbica espacial
+</option>
+
+<option value="spiral">
+Espiral
+</option>
+
+</select>
+
+</div>
+
+
+<!-- FUNCIÓN VECTORIAL -->
+
+<div class="vector-function">
+
+<div class="vector-title">
+
+Función vectorial
+
+</div>
+
+
+<div class="component">
+
+<label>
+x(t)
+</label>
+
+<math-field id="fx">
+\cos(t)
+</math-field>
+
+</div>
+
+
+<div class="component">
+
+<label>
+y(t)
+</label>
+
+<math-field id="fy">
+\sin(t)
+</math-field>
+
+</div>
+
+
+<div class="component" id="zGroup">
+
+<label>
+z(t)
+</label>
+
+<math-field id="fz">
+\frac{t}{3}
+</math-field>
+
+</div>
+
+</div>
+
+
+<!-- INTERVALO -->
+
+<div>
+
+<label>
+Intervalo del parámetro
+</label>
+
+<div class="interval-row">
+
+<div>
+
+<label>
+t mínimo
+</label>
+
+<math-field id="tmin">
+-4\pi
+</math-field>
+
+</div>
+
+<div>
+
+<label>
+t máximo
+</label>
+
+<math-field id="tmax">
+4\pi
+</math-field>
+
+</div>
+
+</div>
+
+</div>
+
+
+<button id="draw"
+        class="primary"
+        type="button">
+
+Graficar
+
+</button>
+
+
+<!-- DESLIZADOR -->
+
+<div>
+
+<label for="slider">
+
+Explorar el parámetro t
+
+</label>
+
+<input
+id="slider"
+type="range"
+min="0"
+max="1000"
+value="500">
+
+<div id="tValue"
+     class="small">
+
+t = 0
+
+</div>
+
+</div>
+
+
+<div id="coords"
+     class="coords">
+
+</div>
+
+
+<div id="error"
+     class="small">
+
+</div>
+
+
+<div class="example-info small">
+
+Puedes introducir expresiones como:
+
+<br><br>
+
+<code>\cos(t)</code>
+
+<br>
+
+<code>\sin(2t)</code>
+
+<br>
+
+<code>\sqrt{t-1}</code>
+
+<br>
+
+<code>\frac{t}{3}</code>
+
+<br>
+
+<code>e^{-t}</code>
+
+<br>
+
+<code>t^2</code>
+
+<br><br>
+
+Los límites pueden escribirse como
+
+<code>-2\pi</code>,
+<code>\frac{\pi}{2}</code>,
+<code>4\pi</code>, etc.
+
+</div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- GRÁFICA -->
+<!-- ========================= -->
+
+<section class="card">
+
+<div class="graph-head">
+
+<div>
+
+<div id="formula"
+     class="formula-display">
+
+</div>
+
+<div id="subtitle"
+     class="small">
+
+Curva parametrizada en ℝ³
+
+</div>
+
+</div>
+
+
+<button id="reset"
+        type="button">
+
+Restablecer vista
+
+</button>
+
+</div>
+
+
+<div id="plot">
+
+</div>
+
+</section>
+
+</main>
+
+
+<div class="help">
+
+El punto <strong>P(t)</strong> se desplaza sobre la trayectoria
+al mover el deslizador.
+
+En ℝ³ puedes arrastrar la gráfica para rotarla y utilizar la rueda
+del ratón para acercarte o alejarte.
+
+</div>
+
+
 <script>
+
+/* =========================================================
+   VARIABLES GENERALES
+========================================================= */
+
 let dimension = 3;
+
 let functions = null;
 
-const $ = id => document.getElementById(id);
-const fx = $("fx"), fy = $("fy"), fz = $("fz");
-const tmin = $("tmin"), tmax = $("tmax"), slider = $("slider");
+let intervalA = -4*Math.PI;
+let intervalB =  4*Math.PI;
 
-function compileExpression(source) {
-  let s = source.trim().toLowerCase();
-  s = s.replace(/\^/g, "**");
-  s = s.replace(/\bpi\b/g, "Math.PI");
-  s = s.replace(/\bln\b/g, "Math.log");
-  const names = ["sin","cos","tan","asin","acos","atan","sqrt","abs","exp","log",
-                 "floor","ceil","round","sinh","cosh","tanh"];
-  for (const name of names) {
-    s = s.replace(new RegExp("\\b" + name + "\\b", "g"), "Math." + name);
-  }
-  if (!/^[0-9t+\-*/().,\sA-Za-z]*$/.test(s)) {
-    throw new Error("La expresión contiene símbolos no admitidos.");
-  }
-  return new Function("t", '"use strict"; return (' + s + ');');
+
+const $ = id =>
+document.getElementById(id);
+
+
+const fx = $("fx");
+const fy = $("fy");
+const fz = $("fz");
+
+const tmin = $("tmin");
+const tmax = $("tmax");
+
+const slider = $("slider");
+
+
+/* =========================================================
+   CONVERTIR LATEX A EXPRESIÓN JAVASCRIPT
+========================================================= */
+
+function latexToJS(latex){
+
+let s = latex.trim();
+
+
+/* eliminar comandos de tamaño */
+
+s = s.replace(/\\left/g,"");
+s = s.replace(/\\right/g,"");
+
+
+/* fracciones */
+
+while(/\\frac\s*\{([^{}]+)\}\s*\{([^{}]+)\}/.test(s)){
+
+s = s.replace(
+/\\frac\s*\{([^{}]+)\}\s*\{([^{}]+)\}/g,
+"(($1)/($2))"
+);
+
 }
 
-function setDimension(d) {
-  dimension = d;
-  $("zGroup").style.display = d === 3 ? "block" : "none";
-  $("btn2").classList.toggle("active", d === 2);
-  $("btn3").classList.toggle("active", d === 3);
-  draw();
+
+/* raíces */
+
+s = s.replace(
+/\\sqrt\s*\{([^{}]+)\}/g,
+"sqrt($1)"
+);
+
+
+/* pi */
+
+s = s.replace(
+/\\pi/g,
+"pi"
+);
+
+
+/* funciones trigonométricas */
+
+const latexFunctions = [
+
+"sin",
+"cos",
+"tan",
+"asin",
+"acos",
+"atan",
+"sinh",
+"cosh",
+"tanh",
+"ln",
+"log",
+"exp"
+
+];
+
+for(const name of latexFunctions){
+
+const regex =
+new RegExp("\\\\"+name,"g");
+
+s = s.replace(regex,name);
+
 }
 
-function currentT() {
-  const a = Number(tmin.value), b = Number(tmax.value);
-  return a + (b-a) * Number(slider.value)/1000;
+
+/* e^x */
+
+s = s.replace(
+/e\^\{([^{}]+)\}/g,
+"exp($1)"
+);
+
+
+/* potencias con llaves */
+
+s = s.replace(
+/\^\{([^{}]+)\}/g,
+"^($1)"
+);
+
+
+/* quitar llaves restantes */
+
+s = s.replace(/\{/g,"(");
+s = s.replace(/\}/g,")");
+
+
+/* multiplicación implícita */
+
+/* 2t -> 2*t */
+
+s = s.replace(
+/(\d)(t)/g,
+"$1*$2"
+);
+
+
+/* 2pi -> 2*pi */
+
+s = s.replace(
+/(\d)(pi)/g,
+"$1*$2"
+);
+
+
+/* t( -> t*( */
+
+s = s.replace(
+/t\(/g,
+"t*("
+);
+
+
+/* )( -> )*( */
+
+s = s.replace(
+/\)\(/g,
+")*("
+);
+
+
+/* número seguido de ( */
+
+s = s.replace(
+/(\d)\(/g,
+"$1*("
+);
+
+
+return s;
+
 }
 
-function calculate() {
-  const a = Number(tmin.value), b = Number(tmax.value);
-  if (!Number.isFinite(a) || !Number.isFinite(b) || a >= b) {
-    throw new Error("Debe cumplirse t mínimo < t máximo.");
-  }
 
-  const X = compileExpression(fx.value);
-  const Y = compileExpression(fy.value);
-  const Z = dimension === 3 ? compileExpression(fz.value) : () => 0;
+/* =========================================================
+   COMPILAR EXPRESIÓN
+========================================================= */
 
-  const xs=[], ys=[], zs=[];
-  const N=900;
-  for(let i=0;i<=N;i++){
-    const t=a+(b-a)*i/N;
-    const x=X(t), y=Y(t), z=Z(t);
-    xs.push(Number.isFinite(x) ? x : null);
-    ys.push(Number.isFinite(y) ? y : null);
-    zs.push(Number.isFinite(z) ? z : null);
-  }
-  return {X,Y,Z,xs,ys,zs};
+function compileExpression(latex){
+
+let s = latexToJS(latex);
+
+s = s.toLowerCase();
+
+
+/* potencia */
+
+s = s.replace(
+/\^/g,
+"**"
+);
+
+
+/* constantes */
+
+s = s.replace(
+/\bpi\b/g,
+"Math.PI"
+);
+
+
+/* logaritmo natural */
+
+s = s.replace(
+/\bln\b/g,
+"Math.log"
+);
+
+
+/* funciones */
+
+const names = [
+
+"sin",
+"cos",
+"tan",
+"asin",
+"acos",
+"atan",
+
+"sqrt",
+"abs",
+
+"exp",
+"log",
+
+"floor",
+"ceil",
+"round",
+
+"sinh",
+"cosh",
+"tanh"
+
+];
+
+
+for(const name of names){
+
+s = s.replace(
+
+new RegExp(
+"(?<!Math\\.)\\b"+name+"\\b",
+"g"
+),
+
+"Math."+name
+
+);
+
 }
 
-function graphLayout() {
-  const common = {
-    margin:{l:50,r:20,b:50,t:15},
-    paper_bgcolor:"rgba(0,0,0,0)",
-    plot_bgcolor:"rgba(0,0,0,0)",
-    showlegend:false
-  };
-  if(dimension===3){
-    return {
-      ...common,
-      margin:{l:0,r:0,b:0,t:5},
-      scene:{
-        xaxis:{title:"x"},
-        yaxis:{title:"y"},
-        zaxis:{title:"z"},
-        aspectmode:"data"
-      }
-    };
-  }
-  return {
-    ...common,
-    xaxis:{title:"x",zeroline:true},
-    yaxis:{title:"y",zeroline:true,scaleanchor:"x",scaleratio:1}
-  };
+
+/* seguridad */
+
+if(
+!/^[0-9t+\-*/().,\sA-Za-z]*$/.test(s)
+){
+
+throw new Error(
+"La expresión contiene símbolos no admitidos."
+);
+
 }
 
-function fmt(v) {
-  return Number.isFinite(v) ? Number(v).toFixed(4) : "no definido";
+
+return new Function(
+
+"t",
+
+'"use strict"; return ('+s+');'
+
+);
+
 }
 
-function updatePoint(updateGraph=true) {
-  if(!functions) return;
-  try {
-    const t=currentT();
-    const x=functions.X(t), y=functions.Y(t), z=functions.Z(t);
-    $("tValue").textContent="t = "+t.toFixed(3);
-    $("coords").innerHTML = dimension===3
-      ? "<strong>P(t)</strong> = ("+fmt(x)+", "+fmt(y)+", "+fmt(z)+")"
-      : "<strong>P(t)</strong> = ("+fmt(x)+", "+fmt(y)+")";
 
-    if(updateGraph){
-      if(dimension===3){
-        Plotly.restyle("plot",{x:[[x]],y:[[y]],z:[[z]]},[1]);
-      }else{
-        Plotly.restyle("plot",{x:[[x]],y:[[y]]},[1]);
-      }
-    }
-  } catch(e) {
-    $("error").textContent="Error: "+e.message;
-  }
+/* =========================================================
+   EVALUAR LOS LÍMITES
+========================================================= */
+
+function evaluateConstant(latex){
+
+const f =
+compileExpression(latex);
+
+const value =
+f(0);
+
+if(!Number.isFinite(value)){
+
+throw new Error(
+"El límite del intervalo no es válido."
+);
+
 }
 
-function draw() {
-  try {
-    $("error").textContent="";
-    functions=calculate();
-    const t=currentT();
-    const x=functions.X(t), y=functions.Y(t), z=functions.Z(t);
+return value;
 
-    let data;
-    if(dimension===3){
-      data=[
-        {type:"scatter3d",mode:"lines",x:functions.xs,y:functions.ys,z:functions.zs,
-         line:{width:6},name:"Trayectoria"},
-        {type:"scatter3d",mode:"markers",x:[x],y:[y],z:[z],
-         marker:{size:7},name:"P(t)"}
-      ];
-    } else {
-      data=[
-        {type:"scatter",mode:"lines",x:functions.xs,y:functions.ys,
-         line:{width:3},name:"Trayectoria"},
-        {type:"scatter",mode:"markers",x:[x],y:[y],
-         marker:{size:10},name:"P(t)"}
-      ];
-    }
-
-    Plotly.react("plot",data,graphLayout(),{responsive:true,displaylogo:false});
-    $("formula").textContent = dimension===3
-      ? "r(t) = ⟨"+fx.value+", "+fy.value+", "+fz.value+"⟩"
-      : "r(t) = ⟨"+fx.value+", "+fy.value+"⟩";
-    $("subtitle").textContent="Curva parametrizada en "+(dimension===3 ? "ℝ³" : "ℝ²");
-    updatePoint(false);
-  } catch(e) {
-    $("error").textContent="Error: "+e.message;
-  }
 }
 
-$("btn2").addEventListener("click",()=>setDimension(2));
-$("btn3").addEventListener("click",()=>setDimension(3));
-$("draw").addEventListener("click",draw);
-slider.addEventListener("input",()=>updatePoint(true));
 
-$("reset").addEventListener("click",()=>{
-  if(dimension===3){
-    Plotly.relayout("plot",{"scene.camera":{eye:{x:1.25,y:1.25,z:1.25}}});
-  }else{
-    Plotly.relayout("plot",{"xaxis.autorange":true,"yaxis.autorange":true});
-  }
-});
+/* =========================================================
+   CAMBIAR DIMENSIÓN
+========================================================= */
+
+function setDimension(d){
+
+dimension = d;
+
+
+$("zGroup").style.display =
+d === 3
+? "block"
+: "none";
+
+
+$("btn2").classList.toggle(
+"active",
+d === 2
+);
+
+
+$("btn3").classList.toggle(
+"active",
+d === 3
+);
+
 
 draw();
+
+}
+
+
+/* =========================================================
+   VALOR ACTUAL DEL PARÁMETRO
+========================================================= */
+
+function currentT(){
+
+return intervalA
++
+(intervalB-intervalA)
+*
+Number(slider.value)/1000;
+
+}
+
+
+/* =========================================================
+   CALCULAR CURVA
+========================================================= */
+
+function calculate(){
+
+const a =
+evaluateConstant(tmin.value);
+
+const b =
+evaluateConstant(tmax.value);
+
+
+if(
+!Number.isFinite(a)
+||
+!Number.isFinite(b)
+||
+a >= b
+){
+
+throw new Error(
+"Debe cumplirse t mínimo < t máximo."
+);
+
+}
+
+
+intervalA = a;
+intervalB = b;
+
+
+const X =
+compileExpression(fx.value);
+
+
+const Y =
+compileExpression(fy.value);
+
+
+const Z =
+dimension === 3
+?
+compileExpression(fz.value)
+:
+()=>0;
+
+
+const xs = [];
+const ys = [];
+const zs = [];
+
+
+const N = 1200;
+
+
+for(
+let i=0;
+i<=N;
+i++
+){
+
+const t =
+a+(b-a)*i/N;
+
+
+let x,y,z;
+
+
+try{
+
+x = X(t);
+y = Y(t);
+z = Z(t);
+
+}catch{
+
+x = NaN;
+y = NaN;
+z = NaN;
+
+}
+
+
+xs.push(
+Number.isFinite(x)
+? x
+: null
+);
+
+
+ys.push(
+Number.isFinite(y)
+? y
+: null
+);
+
+
+zs.push(
+Number.isFinite(z)
+? z
+: null
+);
+
+}
+
+
+return {
+
+X,
+Y,
+Z,
+
+xs,
+ys,
+zs
+
+};
+
+}
+
+
+/* =========================================================
+   DISEÑO DE LA GRÁFICA
+========================================================= */
+
+function graphLayout(){
+
+const common = {
+
+margin:{
+l:50,
+r:20,
+b:50,
+t:15
+},
+
+paper_bgcolor:
+"rgba(0,0,0,0)",
+
+plot_bgcolor:
+"rgba(0,0,0,0)",
+
+showlegend:false
+
+};
+
+
+if(
+dimension === 3
+){
+
+return {
+
+...common,
+
+margin:{
+l:0,
+r:0,
+b:0,
+t:5
+},
+
+scene:{
+
+xaxis:{
+title:"x"
+},
+
+yaxis:{
+title:"y"
+},
+
+zaxis:{
+title:"z"
+},
+
+aspectmode:"data"
+
+}
+
+};
+
+}
+
+
+return {
+
+...common,
+
+xaxis:{
+
+title:"x",
+
+zeroline:true
+
+},
+
+yaxis:{
+
+title:"y",
+
+zeroline:true,
+
+scaleanchor:"x",
+
+scaleratio:1
+
+}
+
+};
+
+}
+
+
+/* =========================================================
+   FORMATO DE NÚMEROS
+========================================================= */
+
+function fmt(v){
+
+if(
+!Number.isFinite(v)
+){
+
+return "no definido";
+
+}
+
+
+if(
+Math.abs(v) < 1e-10
+){
+
+return "0";
+
+}
+
+
+return Number(v).toFixed(4);
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR PUNTO
+========================================================= */
+
+function updatePoint(
+updateGraph=true
+){
+
+if(
+!functions
+){
+
+return;
+
+}
+
+
+try{
+
+const t =
+currentT();
+
+
+const x =
+functions.X(t);
+
+const y =
+functions.Y(t);
+
+const z =
+functions.Z(t);
+
+
+$("tValue").textContent =
+"t = "+t.toFixed(4);
+
+
+if(
+dimension === 3
+){
+
+$("coords").innerHTML =
+
+"<strong>P(t)</strong> = ("+
+
+fmt(x)+", "+
+
+fmt(y)+", "+
+
+fmt(z)+")";
+
+}
+
+else{
+
+$("coords").innerHTML =
+
+"<strong>P(t)</strong> = ("+
+
+fmt(x)+", "+
+
+fmt(y)+")";
+
+}
+
+
+if(
+updateGraph
+){
+
+if(
+dimension === 3
+){
+
+Plotly.restyle(
+
+"plot",
+
+{
+
+x:[[x]],
+
+y:[[y]],
+
+z:[[z]]
+
+},
+
+[1]
+
+);
+
+}
+
+else{
+
+Plotly.restyle(
+
+"plot",
+
+{
+
+x:[[x]],
+
+y:[[y]]
+
+},
+
+[1]
+
+);
+
+}
+
+}
+
+
+}
+
+catch(e){
+
+$("error").textContent =
+"Error: "+e.message;
+
+}
+
+}
+
+
+/* =========================================================
+   GRAFICAR
+========================================================= */
+
+function draw(){
+
+try{
+
+$("error").textContent = "";
+
+
+functions =
+calculate();
+
+
+const t =
+currentT();
+
+
+const x =
+functions.X(t);
+
+const y =
+functions.Y(t);
+
+const z =
+functions.Z(t);
+
+
+let data;
+
+
+/* =====================
+   R3
+===================== */
+
+if(
+dimension === 3
+){
+
+data = [
+
+{
+
+type:"scatter3d",
+
+mode:"lines",
+
+x:functions.xs,
+
+y:functions.ys,
+
+z:functions.zs,
+
+line:{
+width:6
+},
+
+name:"Trayectoria"
+
+},
+
+{
+
+type:"scatter3d",
+
+mode:"markers",
+
+x:[x],
+
+y:[y],
+
+z:[z],
+
+marker:{
+size:7
+},
+
+name:"P(t)"
+
+}
+
+];
+
+}
+
+
+/* =====================
+   R2
+===================== */
+
+else{
+
+data = [
+
+{
+
+type:"scatter",
+
+mode:"lines",
+
+x:functions.xs,
+
+y:functions.ys,
+
+line:{
+width:3
+},
+
+name:"Trayectoria"
+
+},
+
+{
+
+type:"scatter",
+
+mode:"markers",
+
+x:[x],
+
+y:[y],
+
+marker:{
+size:10
+},
+
+name:"P(t)"
+
+}
+
+];
+
+}
+
+
+Plotly.react(
+
+"plot",
+
+data,
+
+graphLayout(),
+
+{
+
+responsive:true,
+
+displaylogo:false
+
+}
+
+);
+
+
+/* fórmula */
+
+if(
+dimension === 3
+){
+
+$("formula").innerHTML =
+
+"r(t) = ⟨ "
+
++fx.value+
+
+", "
+
++fy.value+
+
+", "
+
++fz.value+
+
+" ⟩";
+
+}
+
+else{
+
+$("formula").innerHTML =
+
+"r(t) = ⟨ "
+
++fx.value+
+
+", "
+
++fy.value+
+
+" ⟩";
+
+}
+
+
+$("subtitle").textContent =
+
+"Curva parametrizada en "
+
++
+
+(
+dimension === 3
+?
+"ℝ³"
+:
+"ℝ²"
+);
+
+
+updatePoint(false);
+
+
+}
+
+catch(e){
+
+$("error").textContent =
+
+"Error: "+e.message;
+
+}
+
+}
+
+
+/* =========================================================
+   EJEMPLOS
+========================================================= */
+
+const examples = {
+
+
+helix:{
+
+dimension:3,
+
+x:"\\cos(t)",
+
+y:"\\sin(t)",
+
+z:"\\frac{t}{3}",
+
+min:"-4\\pi",
+
+max:"4\\pi"
+
+},
+
+
+circle:{
+
+dimension:2,
+
+x:"\\cos(t)",
+
+y:"\\sin(t)",
+
+z:"0",
+
+min:"0",
+
+max:"2\\pi"
+
+},
+
+
+parabola:{
+
+dimension:2,
+
+x:"t",
+
+y:"t^2",
+
+z:"0",
+
+min:"-3",
+
+max:"3"
+
+},
+
+
+sqrt:{
+
+dimension:2,
+
+x:"t",
+
+y:"\\sqrt{t-1}",
+
+z:"0",
+
+min:"1",
+
+max:"6"
+
+},
+
+
+cubic:{
+
+dimension:3,
+
+x:"t",
+
+y:"t^2",
+
+z:"t^3",
+
+min:"-2",
+
+max:"2"
+
+},
+
+
+spiral:{
+
+dimension:2,
+
+x:"t\\cos(t)",
+
+y:"t\\sin(t)",
+
+z:"0",
+
+min:"0",
+
+max:"6\\pi"
+
+}
+
+};
+
+
+/* =========================================================
+   CARGAR EJEMPLO
+========================================================= */
+
+function loadExample(name){
+
+const e =
+examples[name];
+
+
+dimension =
+e.dimension;
+
+
+fx.value =
+e.x;
+
+fy.value =
+e.y;
+
+fz.value =
+e.z;
+
+tmin.value =
+e.min;
+
+tmax.value =
+e.max;
+
+
+slider.value =
+500;
+
+
+$("zGroup").style.display =
+dimension === 3
+?
+"block"
+:
+"none";
+
+
+$("btn2").classList.toggle(
+"active",
+dimension === 2
+);
+
+
+$("btn3").classList.toggle(
+"active",
+dimension === 3
+);
+
+
+draw();
+
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+$("btn2").addEventListener(
+
+"click",
+
+()=>setDimension(2)
+
+);
+
+
+$("btn3").addEventListener(
+
+"click",
+
+()=>setDimension(3)
+
+);
+
+
+$("draw").addEventListener(
+
+"click",
+
+draw
+
+);
+
+
+slider.addEventListener(
+
+"input",
+
+()=>updatePoint(true)
+
+);
+
+
+$("examples").addEventListener(
+
+"change",
+
+event=>
+loadExample(
+event.target.value
+)
+
+);
+
+
+/* =========================================================
+   RESTABLECER VISTA
+========================================================= */
+
+$("reset").addEventListener(
+
+"click",
+
+()=>{
+
+if(
+dimension === 3
+){
+
+Plotly.relayout(
+
+"plot",
+
+{
+
+"scene.camera":{
+
+eye:{
+
+x:1.25,
+
+y:1.25,
+
+z:1.25
+
+}
+
+}
+
+}
+
+);
+
+}
+
+else{
+
+Plotly.relayout(
+
+"plot",
+
+{
+
+"xaxis.autorange":true,
+
+"yaxis.autorange":true
+
+}
+
+);
+
+}
+
+}
+
+);
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+setTimeout(
+()=>loadExample("helix"),
+400
+);
+
+}
+
+);
+
 </script>
+
 </body>
 </html>
