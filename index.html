@@ -15,6 +15,11 @@
 </script>
 
 <style>
+
+/* =========================================================
+   VARIABLES DE DISEÑO
+========================================================= */
+
 :root{
   --bg:#f5f7fb;
   --panel:#ffffff;
@@ -24,50 +29,84 @@
   --accent:#3157d5;
   --accent2:#eef2ff;
   --danger:#b42318;
-  --warning:#9a6700;
-  --warning-bg:#fff8c5;
+  --warning:#8a5a00;
+  --warning-bg:#fff8db;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  -webkit-text-size-adjust:100%;
+}
 
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,
+              "Segoe UI",Roboto,Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
 }
 
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
 header{
-  padding:24px 24px 8px;
   max-width:1250px;
   margin:auto;
+  padding:24px 24px 8px;
 }
 
 header h1{
   margin:0 0 6px;
   font-size:clamp(1.5rem,3vw,2.2rem);
+  line-height:1.2;
 }
 
 header p{
   margin:0;
   color:var(--muted);
+  line-height:1.5;
 }
+
+
+/* =========================================================
+   DISTRIBUCIÓN PRINCIPAL
+========================================================= */
 
 main{
   max-width:1250px;
   margin:auto;
   padding:20px 24px 36px;
+
   display:grid;
-  grid-template-columns:340px minmax(0,1fr);
+
+  grid-template-columns:
+    minmax(300px,340px)
+    minmax(0,1fr);
+
   gap:18px;
 }
 
 .card{
+  min-width:0;
+
   background:var(--panel);
+
   border:1px solid var(--border);
+
   border-radius:14px;
+
   padding:16px;
 }
+
+
+/* =========================================================
+   PANEL DE CONTROLES
+========================================================= */
 
 .controls{
   display:flex;
@@ -77,20 +116,39 @@ main{
 
 label{
   display:block;
-  font-size:.9rem;
-  font-weight:650;
+
   margin-bottom:6px;
+
+  font-size:.9rem;
+
+  font-weight:650;
 }
 
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
 button{
-  font:inherit;
   min-height:44px;
+
+  padding:9px 14px;
+
   border:1px solid var(--border);
+
   border-radius:9px;
+
   background:white;
+
   color:var(--text);
-  cursor:pointer;
+
+  font:inherit;
+
   font-weight:650;
+
+  cursor:pointer;
+
+  touch-action:manipulation;
 }
 
 button.primary,
@@ -104,19 +162,40 @@ button:hover{
   filter:brightness(.98);
 }
 
+button:focus-visible{
+  outline:3px solid rgba(49,87,213,.25);
+  outline-offset:2px;
+}
+
 .space-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
 }
 
+
+/* =========================================================
+   MATHLIVE
+========================================================= */
+
 math-field{
+  display:block;
+
   width:100%;
-  min-height:48px;
+  max-width:100%;
+
+  min-height:50px;
+
   padding:8px 10px;
+
+  overflow:hidden;
+
   border:1px solid var(--border);
+
   border-radius:9px;
+
   background:white;
+
   font-size:1.12rem;
 }
 
@@ -125,20 +204,33 @@ math-field:focus-within{
   border-color:var(--accent);
 }
 
+
+/* =========================================================
+   FUNCIÓN VECTORIAL
+========================================================= */
+
 .vector-function{
-  background:#f8f9fc;
-  border:1px solid var(--border);
-  border-radius:12px;
+  min-width:0;
+
   padding:14px;
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+
+  background:#f8f9fc;
 }
 
 .vector-title{
-  font-weight:750;
-  font-size:1.05rem;
   margin-bottom:12px;
+
+  font-size:1.05rem;
+
+  font-weight:750;
 }
 
 .component{
+  min-width:0;
   margin-bottom:12px;
 }
 
@@ -146,126 +238,414 @@ math-field:focus-within{
   margin-bottom:0;
 }
 
+
+/* =========================================================
+   INTERVALO
+========================================================= */
+
 .interval-row{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    minmax(0,1fr)
+    minmax(0,1fr);
+
   gap:10px;
 }
 
-input[type=range]{
+
+/* =========================================================
+   DESLIZADOR
+========================================================= */
+
+input[type="range"]{
   width:100%;
+
+  min-height:30px;
+
+  margin:2px 0;
+
+  cursor:pointer;
+
+  touch-action:pan-y;
+}
+
+
+/* =========================================================
+   RESULTADOS
+========================================================= */
+
+.coords{
+  padding:12px;
+
+  border-radius:9px;
+
+  background:var(--accent2);
+
+  font-size:1rem;
+
+  line-height:1.55;
+
+  overflow-wrap:anywhere;
+}
+
+.small{
+  color:var(--muted);
+  font-size:.88rem;
+}
+
+#error{
+  min-height:20px;
+
+  color:var(--danger);
+
+  font-weight:600;
+
+  overflow-wrap:anywhere;
+}
+
+#warning{
+  display:none;
+
+  padding:10px;
+
+  border-radius:9px;
+
+  background:var(--warning-bg);
+
+  color:var(--warning);
+
+  font-size:.86rem;
+
+  line-height:1.45;
+}
+
+
+/* =========================================================
+   AYUDA
+========================================================= */
+
+.help-box{
+  padding:12px;
+
+  border-radius:10px;
+
+  background:#f8f9fc;
+
+  color:var(--muted);
+
+  font-size:.88rem;
+
+  line-height:1.6;
+}
+
+.help{
+  max-width:1250px;
+
+  margin:-18px auto 30px;
+
+  padding:0 24px;
+
+  color:var(--muted);
+
+  font-size:.9rem;
+
+  line-height:1.5;
+}
+
+
+/* =========================================================
+   GRÁFICA
+========================================================= */
+
+.graph-head{
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  gap:12px;
+
+  margin-bottom:8px;
+}
+
+.graph-head > div{
+  min-width:0;
+}
+
+.formula-display{
+  font-size:1.08rem;
+
+  font-weight:700;
+
+  overflow-wrap:anywhere;
 }
 
 #plot{
   width:100%;
   height:590px;
+  min-width:0;
 }
 
-.graph-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  margin-bottom:8px;
-}
 
-.formula-display{
-  font-size:1.08rem;
-  font-weight:700;
-  overflow-wrap:anywhere;
-}
+/* =========================================================
+   TABLETS
+   801px - 1050px
+========================================================= */
 
-.small{
-  font-size:.88rem;
-  color:var(--muted);
-}
+@media(max-width:1050px){
 
-.coords{
-  background:var(--accent2);
-  padding:12px;
-  border-radius:9px;
-  line-height:1.55;
-  font-size:1rem;
-}
-
-#error{
-  color:var(--danger);
-  min-height:20px;
-  font-weight:600;
-}
-
-#warning{
-  display:none;
-  color:var(--warning);
-  background:var(--warning-bg);
-  padding:10px;
-  border-radius:9px;
-  font-size:.86rem;
-}
-
-.help-box{
-  background:#f8f9fc;
-  padding:12px;
-  border-radius:10px;
-  color:var(--muted);
-  font-size:.88rem;
-  line-height:1.55;
-}
-
-.help{
-  max-width:1250px;
-  margin:-18px auto 30px;
-  padding:0 24px;
-  color:var(--muted);
-  font-size:.9rem;
-}
-
-@media(max-width:800px){
   main{
-    grid-template-columns:1fr;
-    padding:14px;
-  }
-
-  header{
-    padding:18px 14px 4px;
-  }
-
-  .help{
-    padding:0 14px;
+    grid-template-columns:
+      minmax(280px,320px)
+      minmax(0,1fr);
   }
 
   #plot{
-    height:470px;
+    height:540px;
   }
+
 }
+
+
+/* =========================================================
+   TABLETS VERTICALES Y CELULARES GRANDES
+========================================================= */
+
+@media(max-width:800px){
+
+  header{
+    padding:18px 16px 5px;
+  }
+
+  main{
+    grid-template-columns:1fr;
+
+    padding:14px 16px 32px;
+
+    gap:14px;
+  }
+
+  .controls{
+    gap:15px;
+  }
+
+  #plot{
+    height:500px;
+  }
+
+  .help{
+    margin:-12px auto 26px;
+
+    padding:0 16px;
+  }
+
+}
+
+
+/* =========================================================
+   CELULARES
+========================================================= */
+
+@media(max-width:500px){
+
+  header{
+    padding:16px 12px 4px;
+  }
+
+  header h1{
+    font-size:1.55rem;
+  }
+
+  header p{
+    font-size:.92rem;
+  }
+
+  main{
+    padding:12px 10px 28px;
+    gap:12px;
+  }
+
+  .card{
+    padding:12px;
+
+    border-radius:12px;
+  }
+
+  .vector-function{
+    padding:12px;
+  }
+
+  /*
+    t mínimo y t máximo pasan
+    a estar uno debajo del otro.
+  */
+
+  .interval-row{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  /*
+    Encabezado de gráfica vertical.
+  */
+
+  .graph-head{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .graph-head button{
+    width:100%;
+  }
+
+  /*
+    Campos matemáticos más cómodos
+    para interacción táctil.
+  */
+
+  math-field{
+    min-height:54px;
+
+    padding:9px 8px;
+
+    font-size:1.08rem;
+  }
+
+  button{
+    min-height:48px;
+  }
+
+  /*
+    Gráfica más proporcionada
+    para pantalla vertical.
+  */
+
+  #plot{
+    height:420px;
+  }
+
+  .coords{
+    font-size:.96rem;
+  }
+
+  .help-box{
+    font-size:.85rem;
+  }
+
+}
+
+
+/* =========================================================
+   CELULARES MUY ESTRECHOS
+========================================================= */
+
+@media(max-width:360px){
+
+  header h1{
+    font-size:1.4rem;
+  }
+
+  main{
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  .card{
+    padding:10px;
+  }
+
+  .vector-function{
+    padding:10px;
+  }
+
+  math-field{
+    font-size:1rem;
+  }
+
+  #plot{
+    height:380px;
+  }
+
+}
+
+
+/* =========================================================
+   ORIENTACIÓN HORIZONTAL EN DISPOSITIVOS MÓVILES
+========================================================= */
+
+@media(
+  max-width:900px
+)
+and
+(orientation:landscape){
+
+  #plot{
+    height:430px;
+  }
+
+}
+
 </style>
 </head>
+
 
 <body>
 
 <header>
-  <h1>Visualizador de funciones vectoriales</h1>
+
+  <h1>
+    Visualizador de funciones vectoriales
+  </h1>
+
   <p>
-    Introduce libremente una función vectorial y explora su trayectoria
-    en ℝ² o ℝ³.
+    Introduce libremente una función vectorial y explora
+    su trayectoria en ℝ² o ℝ³.
   </p>
+
 </header>
+
 
 <main>
 
-<!-- ===================================================== -->
-<!-- PANEL DE CONTROL                                      -->
-<!-- ===================================================== -->
+
+<!-- =====================================================
+     PANEL DE CONTROL
+===================================================== -->
 
 <section class="card controls">
 
+
+  <!-- ESPACIO -->
+
   <div>
-    <label>Espacio</label>
+
+    <label>
+      Espacio
+    </label>
 
     <div class="space-buttons">
-      <button id="btn2" type="button">ℝ²</button>
-      <button id="btn3" type="button" class="active">ℝ³</button>
+
+      <button
+        id="btn2"
+        type="button">
+
+        ℝ²
+
+      </button>
+
+      <button
+        id="btn3"
+        type="button"
+        class="active">
+
+        ℝ³
+
+      </button>
+
     </div>
+
   </div>
 
 
@@ -277,30 +657,45 @@ input[type=range]{
       Función vectorial
     </div>
 
+
     <div class="component">
-      <label for="fx">x(t)</label>
+
+      <label for="fx">
+        x(t)
+      </label>
 
       <math-field id="fx">
-        \sqrt{t}
+        \cos(t)
       </math-field>
+
     </div>
 
 
     <div class="component">
-      <label for="fy">y(t)</label>
+
+      <label for="fy">
+        y(t)
+      </label>
 
       <math-field id="fy">
         \sin(t)
       </math-field>
+
     </div>
 
 
-    <div class="component" id="zGroup">
-      <label for="fz">z(t)</label>
+    <div
+      class="component"
+      id="zGroup">
+
+      <label for="fz">
+        z(t)
+      </label>
 
       <math-field id="fz">
         \frac{t}{3}
       </math-field>
+
     </div>
 
   </div>
@@ -310,35 +705,54 @@ input[type=range]{
 
   <div>
 
-    <label>Intervalo del parámetro</label>
+    <label>
+      Intervalo del parámetro
+    </label>
+
 
     <div class="interval-row">
 
+
       <div>
-        <label for="tmin">t mínimo</label>
+
+        <label for="tmin">
+          t mínimo
+        </label>
 
         <math-field id="tmin">
-          \pi
+          -4\pi
         </math-field>
+
       </div>
 
+
       <div>
-        <label for="tmax">t máximo</label>
+
+        <label for="tmax">
+          t máximo
+        </label>
 
         <math-field id="tmax">
           4\pi
         </math-field>
+
       </div>
+
 
     </div>
 
   </div>
 
 
-  <button id="draw"
-          class="primary"
-          type="button">
+  <!-- GRAFICAR -->
+
+  <button
+    id="draw"
+    class="primary"
+    type="button">
+
     Graficar
+
   </button>
 
 
@@ -347,7 +761,7 @@ input[type=range]{
   <div>
 
     <label for="slider">
-      Explorar el parámetro
+      Explorar el parámetro t
     </label>
 
     <input
@@ -355,33 +769,57 @@ input[type=range]{
       type="range"
       min="0"
       max="1000"
-      value="0"
+      value="500"
     >
 
-    <div id="tValue" class="small">
-      t =
+    <div
+      id="tValue"
+      class="small">
+
+      t = 0
+
     </div>
 
   </div>
 
 
-  <div id="coords" class="coords">
-    P(t) =
+  <!-- COORDENADAS -->
+
+  <div
+    id="coords"
+    class="coords">
+
+    <strong>P(t)</strong>
+
   </div>
 
 
+  <!-- ADVERTENCIAS -->
+
   <div id="warning"></div>
 
-  <div id="error" class="small"></div>
+  <div
+    id="error"
+    class="small">
+  </div>
 
+
+  <!-- AYUDA -->
 
   <div class="help-box">
 
-    <strong>Entrada matemática libre</strong>
+    <strong>
+      Entrada matemática libre
+    </strong>
 
     <br><br>
 
-    Puedes escribir directamente expresiones como:
+    Escribe directamente las componentes de la
+    función vectorial.
+
+    <br><br>
+
+    Por ejemplo:
 
     <br>
 
@@ -396,70 +834,92 @@ input[type=range]{
 
     <br><br>
 
-    También puedes usar π en los extremos del intervalo:
+    También puedes utilizar π en el intervalo:
 
     <br>
 
-    −2π, π/2, 4π, 8π, etc.
+    −2π,
+    π/2,
+    4π,
+    8π, etc.
 
   </div>
+
 
 </section>
 
 
-<!-- ===================================================== -->
-<!-- GRÁFICA                                               -->
-<!-- ===================================================== -->
+<!-- =====================================================
+     PANEL DE LA GRÁFICA
+===================================================== -->
 
 <section class="card">
 
+
   <div class="graph-head">
+
 
     <div>
 
-      <div id="formula"
-           class="formula-display">
+      <div
+        id="formula"
+        class="formula-display">
       </div>
 
-      <div id="subtitle"
-           class="small">
+      <div
+        id="subtitle"
+        class="small">
+
         Curva parametrizada en ℝ³
+
       </div>
 
     </div>
 
 
-    <button id="reset"
-            type="button">
+    <button
+      id="reset"
+      type="button">
+
       Restablecer vista
+
     </button>
+
 
   </div>
 
 
   <div id="plot"></div>
 
+
 </section>
+
 
 </main>
 
 
 <div class="help">
 
-  El punto <strong>P(t)</strong> se desplaza sobre la trayectoria
-  al mover el deslizador.
+  El punto <strong>P(t)</strong> se desplaza sobre
+  la trayectoria al mover el deslizador.
 
-  En ℝ³ puedes arrastrar la gráfica para rotarla y utilizar la rueda
-  del ratón para acercarte o alejarte.
+  En ℝ³ puedes arrastrar la gráfica para rotarla
+  y utilizar los gestos táctiles o la rueda del ratón
+  para acercarte o alejarte.
 
 </div>
 
 
-<!-- ===================================================== -->
-<!-- PROGRAMA                                              -->
-<!-- ===================================================== -->
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
 <script type="module">
+
+
+/* ========================================================
+   COMPUTE ENGINE
+======================================================== */
 
 import {
   ComputeEngine
@@ -467,22 +927,19 @@ import {
 from "https://cdn.jsdelivr.net/npm/@cortex-js/compute-engine/+esm";
 
 
-/* ========================================================
-   COMPUTE ENGINE
-======================================================== */
-
 const ce = new ComputeEngine();
 
 
 /* ========================================================
-   VARIABLES
+   VARIABLES GENERALES
 ======================================================== */
 
 let dimension = 3;
 
 let functions = null;
 
-let intervalA = Math.PI;
+let intervalA = -4 * Math.PI;
+
 let intervalB = 4 * Math.PI;
 
 
@@ -490,18 +947,27 @@ const $ = id =>
   document.getElementById(id);
 
 
-const fx = $("fx");
-const fy = $("fy");
-const fz = $("fz");
+const fx =
+  $("fx");
 
-const tmin = $("tmin");
-const tmax = $("tmax");
+const fy =
+  $("fy");
 
-const slider = $("slider");
+const fz =
+  $("fz");
+
+const tmin =
+  $("tmin");
+
+const tmax =
+  $("tmax");
+
+const slider =
+  $("slider");
 
 
 /* ========================================================
-   OBTENER LATEX DEL MATH-FIELD
+   OBTENER LATEX DE MATHLIVE
 ======================================================== */
 
 function getLatex(field){
@@ -512,12 +978,15 @@ function getLatex(field){
 
 
 /* ========================================================
-   CREAR EXPRESIÓN MATEMÁTICA
+   INTERPRETAR UNA EXPRESIÓN
 ======================================================== */
 
 function parseExpression(latex){
 
-  if(!latex || !latex.trim()){
+  if(
+    !latex ||
+    !latex.trim()
+  ){
 
     throw new Error(
       "Hay una expresión matemática vacía."
@@ -525,64 +994,53 @@ function parseExpression(latex){
 
   }
 
+
   return ce.parse(latex);
 
 }
 
 
 /* ========================================================
-   EVALUAR EXPRESIÓN PARA UN VALOR DE t
+   EVALUAR EXPRESIÓN EN t
 ======================================================== */
 
-function evaluateAt(expression, t){
+function evaluateAt(expression,t){
 
   try{
 
-    /*
-      Sustituimos t por su valor numérico.
-    */
-
     const substituted =
       expression.subs({
-        t: t
+        t:t
       });
 
-
-    /*
-      N() solicita una aproximación numérica.
-    */
 
     const numeric =
       substituted.N();
 
 
-    /*
-      numericValue devuelve el valor JS
-      cuando el resultado es numérico.
-    */
-
     const value =
       numeric.numericValue;
 
 
-    if(typeof value === "number" &&
-       Number.isFinite(value)){
+    if(
+      typeof value === "number" &&
+      Number.isFinite(value)
+    ){
 
       return value;
 
     }
 
 
-    /*
-      Algunos resultados del Compute Engine
-      pueden convertirse mediante valueOf().
-    */
-
     const alternative =
-      Number(numeric.valueOf());
+      Number(
+        numeric.valueOf()
+      );
 
 
-    if(Number.isFinite(alternative)){
+    if(
+      Number.isFinite(alternative)
+    ){
 
       return alternative;
 
@@ -592,7 +1050,8 @@ function evaluateAt(expression, t){
     return NaN;
 
   }
-  catch{
+
+  catch(error){
 
     return NaN;
 
@@ -602,7 +1061,7 @@ function evaluateAt(expression, t){
 
 
 /* ========================================================
-   EVALUAR UNA CONSTANTE
+   EVALUAR CONSTANTES DEL INTERVALO
 ======================================================== */
 
 function evaluateConstant(latex){
@@ -619,8 +1078,10 @@ function evaluateConstant(latex){
     numeric.numericValue;
 
 
-  if(typeof value === "number" &&
-     Number.isFinite(value)){
+  if(
+    typeof value === "number" &&
+    Number.isFinite(value)
+  ){
 
     return value;
 
@@ -628,10 +1089,14 @@ function evaluateConstant(latex){
 
 
   const alternative =
-    Number(numeric.valueOf());
+    Number(
+      numeric.valueOf()
+    );
 
 
-  if(Number.isFinite(alternative)){
+  if(
+    Number.isFinite(alternative)
+  ){
 
     return alternative;
 
@@ -646,7 +1111,7 @@ function evaluateConstant(latex){
 
 
 /* ========================================================
-   CAMBIAR ENTRE R2 Y R3
+   CAMBIAR DIMENSIÓN
 ======================================================== */
 
 function setDimension(d){
@@ -673,8 +1138,14 @@ function setDimension(d){
 
 
   $("subtitle").textContent =
+
     "Curva parametrizada en " +
-    (d === 3 ? "ℝ³" : "ℝ²");
+
+    (
+      d === 3
+        ? "ℝ³"
+        : "ℝ²"
+    );
 
 
   draw();
@@ -683,23 +1154,34 @@ function setDimension(d){
 
 
 /* ========================================================
-   VALOR DE t DETERMINADO POR EL DESLIZADOR
+   VALOR ACTUAL DE t
 ======================================================== */
 
 function currentT(){
 
   const position =
-    Number(slider.value) / 1000;
+
+    Number(slider.value)
+    /
+    1000;
 
 
   return intervalA +
-    (intervalB - intervalA) * position;
+
+    (
+      intervalB -
+      intervalA
+    )
+
+    *
+
+    position;
 
 }
 
 
 /* ========================================================
-   CALCULAR TODOS LOS PUNTOS
+   CALCULAR LA CURVA
 ======================================================== */
 
 function calculate(){
@@ -716,8 +1198,10 @@ function calculate(){
     );
 
 
-  if(!Number.isFinite(a) ||
-     !Number.isFinite(b)){
+  if(
+    !Number.isFinite(a) ||
+    !Number.isFinite(b)
+  ){
 
     throw new Error(
       "Los extremos del intervalo deben ser números reales."
@@ -736,13 +1220,9 @@ function calculate(){
 
 
   intervalA = a;
+
   intervalB = b;
 
-
-  /*
-    Interpretamos las componentes introducidas
-    libremente por el estudiante.
-  */
 
   const X =
     parseExpression(
@@ -758,20 +1238,24 @@ function calculate(){
 
   const Z =
     dimension === 3
+
       ? parseExpression(
           getLatex(fz)
         )
+
       : ce.parse("0");
 
 
   const xs = [];
+
   const ys = [];
+
   const zs = [];
 
 
   /*
-    Número de puntos empleados para construir
-    la curva.
+    Número de puntos utilizados para
+    aproximar la curva.
   */
 
   const N = 1200;
@@ -780,58 +1264,70 @@ function calculate(){
   let invalidPoints = 0;
 
 
-  for(let i = 0; i <= N; i++){
+  for(
+    let i=0;
+    i<=N;
+    i++
+  ){
 
     const t =
-      a + (b-a) * i/N;
+
+      a +
+
+      (b-a)
+      *
+      i/N;
 
 
     const x =
       evaluateAt(X,t);
 
+
     const y =
       evaluateAt(Y,t);
+
 
     const z =
       evaluateAt(Z,t);
 
 
-    /*
-      Para una curva en R3 las tres componentes
-      deben estar definidas.
-
-      Para R2 solamente x e y.
-    */
-
     const valid =
+
       dimension === 3
-        ? (
-            Number.isFinite(x) &&
-            Number.isFinite(y) &&
-            Number.isFinite(z)
-          )
-        : (
-            Number.isFinite(x) &&
-            Number.isFinite(y)
-          );
+
+      ? (
+          Number.isFinite(x) &&
+          Number.isFinite(y) &&
+          Number.isFinite(z)
+        )
+
+      : (
+          Number.isFinite(x) &&
+          Number.isFinite(y)
+        );
 
 
     if(valid){
 
       xs.push(x);
+
       ys.push(y);
+
       zs.push(z);
 
     }
+
     else{
 
       /*
-        null hace que Plotly interrumpa la curva
-        en las regiones donde la función no existe.
+        null interrumpe la curva
+        en los puntos donde no está definida.
       */
 
       xs.push(null);
+
       ys.push(null);
+
       zs.push(null);
 
       invalidPoints++;
@@ -852,6 +1348,7 @@ function calculate(){
     zs,
 
     invalidPoints,
+
     totalPoints:N+1
 
   };
@@ -860,7 +1357,7 @@ function calculate(){
 
 
 /* ========================================================
-   DISEÑO DE LA GRÁFICA
+   CONFIGURACIÓN DE LA GRÁFICA
 ======================================================== */
 
 function graphLayout(){
@@ -880,12 +1377,16 @@ function graphLayout(){
     plot_bgcolor:
       "rgba(0,0,0,0)",
 
-    showlegend:false
+    showlegend:false,
+
+    autosize:true
 
   };
 
 
-  if(dimension === 3){
+  if(
+    dimension === 3
+  ){
 
     return {
 
@@ -930,15 +1431,43 @@ function graphLayout(){
 
     xaxis:{
       title:"x",
-      zeroline:true
+      zeroline:true,
+      automargin:true
     },
 
     yaxis:{
       title:"y",
       zeroline:true,
       scaleanchor:"x",
-      scaleratio:1
+      scaleratio:1,
+      automargin:true
     }
+
+  };
+
+}
+
+
+/* ========================================================
+   CONFIGURACIÓN DE PLOTLY
+======================================================== */
+
+function plotConfig(){
+
+  return {
+
+    responsive:true,
+
+    displaylogo:false,
+
+    scrollZoom:true,
+
+    doubleClick:"reset",
+
+    modeBarButtonsToRemove:[
+      "lasso2d",
+      "select2d"
+    ]
 
   };
 
@@ -951,14 +1480,18 @@ function graphLayout(){
 
 function fmt(v){
 
-  if(!Number.isFinite(v)){
+  if(
+    !Number.isFinite(v)
+  ){
 
     return "no definido";
 
   }
 
 
-  if(Math.abs(v) < 1e-10){
+  if(
+    Math.abs(v) < 1e-10
+  ){
 
     return "0";
 
@@ -969,26 +1502,34 @@ function fmt(v){
     Math.abs(v);
 
 
-  if(abs >= 10000 ||
-     abs < 0.0001){
+  if(
+    abs >= 10000 ||
+    abs < 0.0001
+  ){
 
     return v.toExponential(4);
 
   }
 
 
-  return Number(v.toFixed(4)).toString();
+  return Number(
+    v.toFixed(4)
+  ).toString();
 
 }
 
 
 /* ========================================================
-   ACTUALIZAR PUNTO P(t)
+   ACTUALIZAR PUNTO
 ======================================================== */
 
-function updatePoint(updateGraph = true){
+function updatePoint(
+  updateGraph=true
+){
 
-  if(!functions){
+  if(
+    !functions
+  ){
 
     return;
 
@@ -1021,10 +1562,14 @@ function updatePoint(updateGraph = true){
 
 
   $("tValue").textContent =
-    "t = " + fmt(t);
+
+    "t = " +
+    fmt(t);
 
 
-  if(dimension === 3){
+  if(
+    dimension === 3
+  ){
 
     $("coords").innerHTML =
 
@@ -1034,9 +1579,12 @@ function updatePoint(updateGraph = true){
 
       fmt(y) + ", " +
 
-      fmt(z) + ")";
+      fmt(z) +
+
+      ")";
 
   }
+
   else{
 
     $("coords").innerHTML =
@@ -1045,46 +1593,66 @@ function updatePoint(updateGraph = true){
 
       fmt(x) + ", " +
 
-      fmt(y) + ")";
+      fmt(y) +
+
+      ")";
 
   }
 
 
-  if(!updateGraph){
+  if(
+    !updateGraph
+  ){
 
     return;
 
   }
 
 
-  /*
-    Si el punto actual no pertenece al dominio,
-    ocultamos el marcador.
-  */
-
   const valid =
+
     dimension === 3
-      ? (
-          Number.isFinite(x) &&
-          Number.isFinite(y) &&
-          Number.isFinite(z)
-        )
-      : (
-          Number.isFinite(x) &&
-          Number.isFinite(y)
-        );
+
+    ? (
+        Number.isFinite(x) &&
+        Number.isFinite(y) &&
+        Number.isFinite(z)
+      )
+
+    : (
+        Number.isFinite(x) &&
+        Number.isFinite(y)
+      );
 
 
-  if(dimension === 3){
+  if(
+    dimension === 3
+  ){
 
     Plotly.restyle(
 
       "plot",
 
       {
-        x:[valid ? [x] : []],
-        y:[valid ? [y] : []],
-        z:[valid ? [z] : []]
+
+        x:[
+          valid
+          ? [x]
+          : []
+        ],
+
+        y:[
+          valid
+          ? [y]
+          : []
+        ],
+
+        z:[
+          valid
+          ? [z]
+          : []
+        ]
+
       },
 
       [1]
@@ -1092,6 +1660,7 @@ function updatePoint(updateGraph = true){
     );
 
   }
+
   else{
 
     Plotly.restyle(
@@ -1099,8 +1668,19 @@ function updatePoint(updateGraph = true){
       "plot",
 
       {
-        x:[valid ? [x] : []],
-        y:[valid ? [y] : []]
+
+        x:[
+          valid
+          ? [x]
+          : []
+        ],
+
+        y:[
+          valid
+          ? [y]
+          : []
+        ]
+
       },
 
       [1]
@@ -1113,7 +1693,7 @@ function updatePoint(updateGraph = true){
 
 
 /* ========================================================
-   MOSTRAR FÓRMULA
+   MOSTRAR FUNCIÓN ACTUAL
 ======================================================== */
 
 function updateFormula(){
@@ -1121,45 +1701,63 @@ function updateFormula(){
   const x =
     getLatex(fx);
 
+
   const y =
     getLatex(fy);
+
 
   const z =
     getLatex(fz);
 
+
   const a =
     getLatex(tmin);
+
 
   const b =
     getLatex(tmax);
 
 
-  /*
-    Se muestra como texto matemático legible.
-    Los campos originales permanecen arriba
-    completamente editables.
-  */
-
-  if(dimension === 3){
+  if(
+    dimension === 3
+  ){
 
     $("formula").textContent =
 
       "r(t) = ⟨ " +
+
       x + ", " +
+
       y + ", " +
-      z + " ⟩,    " +
-      a + " ≤ t ≤ " +
+
+      z +
+
+      " ⟩,   " +
+
+      a +
+
+      " ≤ t ≤ " +
+
       b;
 
   }
+
   else{
 
     $("formula").textContent =
 
       "r(t) = ⟨ " +
+
       x + ", " +
-      y + " ⟩,    " +
-      a + " ≤ t ≤ " +
+
+      y +
+
+      " ⟩,   " +
+
+      a +
+
+      " ≤ t ≤ " +
+
       b;
 
   }
@@ -1175,7 +1773,9 @@ function draw(){
 
   try{
 
-    $("error").textContent = "";
+    $("error").textContent =
+      "";
+
 
     $("warning").style.display =
       "none";
@@ -1185,18 +1785,17 @@ function draw(){
       calculate();
 
 
-    /*
-      Comprobamos que exista al menos
-      un punto válido.
-    */
-
     const validCount =
+
       functions.xs.filter(
-        x => x !== null
+        value =>
+          value !== null
       ).length;
 
 
-    if(validCount === 0){
+    if(
+      validCount === 0
+    ){
 
       throw new Error(
         "La función no tiene puntos reales definidos en el intervalo indicado."
@@ -1205,18 +1804,9 @@ function draw(){
     }
 
 
-    /*
-      Aviso si solamente una parte del
-      intervalo pertenece al dominio.
-    */
-
-    if(functions.invalidPoints > 0){
-
-      const percent =
-        100 *
-        functions.invalidPoints /
-        functions.totalPoints;
-
+    if(
+      functions.invalidPoints > 0
+    ){
 
       $("warning").style.display =
         "block";
@@ -1225,18 +1815,21 @@ function draw(){
       $("warning").textContent =
 
         "Advertencia: la función no está definida " +
+
         "para todos los valores del intervalo. " +
+
         "La gráfica muestra únicamente la parte real definida.";
 
     }
 
 
     /*
-      Reiniciamos el deslizador en el
-      extremo izquierdo del intervalo.
+      El deslizador inicia en el
+      punto medio del intervalo.
     */
 
-    slider.value = 0;
+    slider.value =
+      500;
 
 
     const t =
@@ -1265,26 +1858,31 @@ function draw(){
 
 
     const initialValid =
+
       dimension === 3
-        ? (
-            Number.isFinite(x) &&
-            Number.isFinite(y) &&
-            Number.isFinite(z)
-          )
-        : (
-            Number.isFinite(x) &&
-            Number.isFinite(y)
-          );
+
+      ? (
+          Number.isFinite(x) &&
+          Number.isFinite(y) &&
+          Number.isFinite(z)
+        )
+
+      : (
+          Number.isFinite(x) &&
+          Number.isFinite(y)
+        );
 
 
     let data;
 
 
-    /* ==========================
+    /* =====================================================
        R3
-    ========================== */
+    ===================================================== */
 
-    if(dimension === 3){
+    if(
+      dimension === 3
+    ){
 
       data = [
 
@@ -1310,17 +1908,27 @@ function draw(){
 
         },
 
+
         {
 
           type:"scatter3d",
 
           mode:"markers",
 
-          x:initialValid ? [x] : [],
+          x:
+            initialValid
+            ? [x]
+            : [],
 
-          y:initialValid ? [y] : [],
+          y:
+            initialValid
+            ? [y]
+            : [],
 
-          z:initialValid ? [z] : [],
+          z:
+            initialValid
+            ? [z]
+            : [],
 
           marker:{
             size:7
@@ -1335,9 +1943,9 @@ function draw(){
     }
 
 
-    /* ==========================
+    /* =====================================================
        R2
-    ========================== */
+    ===================================================== */
 
     else{
 
@@ -1363,15 +1971,22 @@ function draw(){
 
         },
 
+
         {
 
           type:"scatter",
 
           mode:"markers",
 
-          x:initialValid ? [x] : [],
+          x:
+            initialValid
+            ? [x]
+            : [],
 
-          y:initialValid ? [y] : [],
+          y:
+            initialValid
+            ? [y]
+            : [],
 
           marker:{
             size:10
@@ -1394,10 +2009,7 @@ function draw(){
 
       graphLayout(),
 
-      {
-        responsive:true,
-        displaylogo:false
-      }
+      plotConfig()
 
     );
 
@@ -1406,14 +2018,34 @@ function draw(){
 
     updatePoint(false);
 
+
+    /*
+      Fuerza un reajuste del tamaño
+      después de renderizar.
+    */
+
+    setTimeout(
+      () => {
+
+        Plotly.Plots.resize(
+          $("plot")
+        );
+
+      },
+      80
+    );
+
   }
 
   catch(error){
 
     console.error(error);
 
+
     $("error").textContent =
-      "Error: " + error.message;
+
+      "Error: " +
+      error.message;
 
   }
 
@@ -1421,30 +2053,53 @@ function draw(){
 
 
 /* ========================================================
-   EVENTOS
+   BOTONES R2 Y R3
 ======================================================== */
 
 $("btn2").addEventListener(
+
   "click",
-  () => setDimension(2)
+
+  () =>
+    setDimension(2)
+
 );
 
 
 $("btn3").addEventListener(
+
   "click",
-  () => setDimension(3)
+
+  () =>
+    setDimension(3)
+
 );
 
+
+/* ========================================================
+   BOTÓN GRAFICAR
+======================================================== */
 
 $("draw").addEventListener(
+
   "click",
+
   draw
+
 );
 
 
+/* ========================================================
+   DESLIZADOR
+======================================================== */
+
 slider.addEventListener(
+
   "input",
-  () => updatePoint(true)
+
+  () =>
+    updatePoint(true)
+
 );
 
 
@@ -1458,24 +2113,34 @@ slider.addEventListener(
   fz,
   tmin,
   tmax
-].forEach(field => {
+]
+.forEach(
 
-  field.addEventListener(
-    "keydown",
-    event => {
+  field => {
 
-      if(event.key === "Enter"){
+    field.addEventListener(
 
-        event.preventDefault();
+      "keydown",
 
-        draw();
+      event => {
+
+        if(
+          event.key === "Enter"
+        ){
+
+          event.preventDefault();
+
+          draw();
+
+        }
 
       }
 
-    }
-  );
+    );
 
-});
+  }
+
+);
 
 
 /* ========================================================
@@ -1488,7 +2153,9 @@ $("reset").addEventListener(
 
   () => {
 
-    if(dimension === 3){
+    if(
+      dimension === 3
+    ){
 
       Plotly.relayout(
 
@@ -1497,11 +2164,13 @@ $("reset").addEventListener(
         {
 
           "scene.camera":{
+
             eye:{
               x:1.25,
               y:1.25,
               z:1.25
             }
+
           }
 
         }
@@ -1517,8 +2186,13 @@ $("reset").addEventListener(
         "plot",
 
         {
-          "xaxis.autorange":true,
-          "yaxis.autorange":true
+
+          "xaxis.autorange":
+            true,
+
+          "yaxis.autorange":
+            true
+
         }
 
       );
@@ -1531,16 +2205,89 @@ $("reset").addEventListener(
 
 
 /* ========================================================
+   REAJUSTAR GRÁFICA AL CAMBIAR TAMAÑO DE PANTALLA
+======================================================== */
+
+let resizeTimer;
+
+
+window.addEventListener(
+
+  "resize",
+
+  () => {
+
+    clearTimeout(
+      resizeTimer
+    );
+
+
+    resizeTimer =
+      setTimeout(
+
+        () => {
+
+          if(
+            $("plot").data
+          ){
+
+            Plotly.Plots.resize(
+              $("plot")
+            );
+
+          }
+
+        },
+
+        120
+
+      );
+
+  }
+
+);
+
+
+/* ========================================================
+   CAMBIO DE ORIENTACIÓN
+======================================================== */
+
+window.addEventListener(
+
+  "orientationchange",
+
+  () => {
+
+    setTimeout(
+
+      () => {
+
+        Plotly.Plots.resize(
+          $("plot")
+        );
+
+      },
+
+      250
+
+    );
+
+  }
+
+);
+
+
+/* ========================================================
    INICIALIZACIÓN
 ======================================================== */
 
 customElements
-  .whenDefined("math-field")
-  .then(() => {
+.whenDefined(
+  "math-field"
+)
+.then(
 
-    /*
-      Teclado matemático virtual de MathLive.
-    */
+  () => {
 
     [
       fx,
@@ -1548,17 +2295,24 @@ customElements
       fz,
       tmin,
       tmax
-    ].forEach(field => {
+    ]
+    .forEach(
 
-      field.mathVirtualKeyboardPolicy =
-        "auto";
+      field => {
 
-    });
+        field.mathVirtualKeyboardPolicy =
+          "auto";
+
+      }
+
+    );
 
 
     draw();
 
-  });
+  }
+
+);
 
 </script>
 
