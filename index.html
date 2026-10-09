@@ -16,10 +16,6 @@
 
 <style>
 
-/* =========================================================
-   VARIABLES DE DISEÑO
-========================================================= */
-
 :root{
   --bg:#f5f7fb;
   --panel:#ffffff;
@@ -31,6 +27,8 @@
   --danger:#b42318;
   --warning:#8a5a00;
   --warning-bg:#fff8db;
+  --green:#067647;
+  --green-bg:#ecfdf3;
 }
 
 *{
@@ -49,13 +47,8 @@ body{
   color:var(--text);
 }
 
-
-/* =========================================================
-   ENCABEZADO
-========================================================= */
-
 header{
-  max-width:1250px;
+  max-width:1300px;
   margin:auto;
   padding:24px 24px 8px;
 }
@@ -63,7 +56,6 @@ header{
 header h1{
   margin:0 0 6px;
   font-size:clamp(1.5rem,3vw,2.2rem);
-  line-height:1.2;
 }
 
 header p{
@@ -72,20 +64,15 @@ header p{
   line-height:1.5;
 }
 
-
-/* =========================================================
-   DISTRIBUCIÓN PRINCIPAL
-========================================================= */
-
 main{
-  max-width:1250px;
+  max-width:1300px;
   margin:auto;
   padding:20px 24px 36px;
 
   display:grid;
 
   grid-template-columns:
-    minmax(300px,340px)
+    minmax(310px,360px)
     minmax(0,1fr);
 
   gap:18px;
@@ -93,20 +80,11 @@ main{
 
 .card{
   min-width:0;
-
   background:var(--panel);
-
   border:1px solid var(--border);
-
   border-radius:14px;
-
   padding:16px;
 }
-
-
-/* =========================================================
-   PANEL DE CONTROLES
-========================================================= */
 
 .controls{
   display:flex;
@@ -116,38 +94,21 @@ main{
 
 label{
   display:block;
-
   margin-bottom:6px;
-
   font-size:.9rem;
-
   font-weight:650;
 }
 
-
-/* =========================================================
-   BOTONES
-========================================================= */
-
 button{
   min-height:44px;
-
   padding:9px 14px;
-
   border:1px solid var(--border);
-
   border-radius:9px;
-
   background:white;
-
   color:var(--text);
-
   font:inherit;
-
   font-weight:650;
-
   cursor:pointer;
-
   touch-action:manipulation;
 }
 
@@ -173,29 +134,28 @@ button:focus-visible{
   gap:8px;
 }
 
+.geometry-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
 
-/* =========================================================
-   MATHLIVE
-========================================================= */
+.geometry-buttons button.on{
+  background:var(--green);
+  color:white;
+  border-color:var(--green);
+}
 
 math-field{
   display:block;
-
   width:100%;
   max-width:100%;
-
   min-height:50px;
-
   padding:8px 10px;
-
   overflow:hidden;
-
   border:1px solid var(--border);
-
   border-radius:9px;
-
   background:white;
-
   font-size:1.12rem;
 }
 
@@ -204,28 +164,19 @@ math-field:focus-within{
   border-color:var(--accent);
 }
 
-
-/* =========================================================
-   FUNCIÓN VECTORIAL
-========================================================= */
-
-.vector-function{
+.vector-function,
+.geometry-panel{
   min-width:0;
-
   padding:14px;
-
   border:1px solid var(--border);
-
   border-radius:12px;
-
   background:#f8f9fc;
 }
 
-.vector-title{
+.vector-title,
+.geometry-title{
   margin-bottom:12px;
-
   font-size:1.05rem;
-
   font-weight:750;
 }
 
@@ -238,54 +189,26 @@ math-field:focus-within{
   margin-bottom:0;
 }
 
-
-/* =========================================================
-   INTERVALO
-========================================================= */
-
 .interval-row{
   display:grid;
-
-  grid-template-columns:
-    minmax(0,1fr)
-    minmax(0,1fr);
-
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:10px;
 }
 
-
-/* =========================================================
-   DESLIZADOR
-========================================================= */
-
 input[type="range"]{
   width:100%;
-
   min-height:30px;
-
   margin:2px 0;
-
   cursor:pointer;
-
   touch-action:pan-y;
 }
 
-
-/* =========================================================
-   RESULTADOS
-========================================================= */
-
 .coords{
   padding:12px;
-
   border-radius:9px;
-
   background:var(--accent2);
-
   font-size:1rem;
-
   line-height:1.55;
-
   overflow-wrap:anywhere;
 }
 
@@ -296,77 +219,35 @@ input[type="range"]{
 
 #error{
   min-height:20px;
-
   color:var(--danger);
-
   font-weight:600;
-
   overflow-wrap:anywhere;
 }
 
 #warning{
   display:none;
-
   padding:10px;
-
   border-radius:9px;
-
   background:var(--warning-bg);
-
   color:var(--warning);
-
   font-size:.86rem;
-
   line-height:1.45;
 }
 
-
-/* =========================================================
-   AYUDA
-========================================================= */
-
 .help-box{
   padding:12px;
-
   border-radius:10px;
-
   background:#f8f9fc;
-
   color:var(--muted);
-
   font-size:.88rem;
-
   line-height:1.6;
 }
 
-.help{
-  max-width:1250px;
-
-  margin:-18px auto 30px;
-
-  padding:0 24px;
-
-  color:var(--muted);
-
-  font-size:.9rem;
-
-  line-height:1.5;
-}
-
-
-/* =========================================================
-   GRÁFICA
-========================================================= */
-
 .graph-head{
   display:flex;
-
   justify-content:space-between;
-
   align-items:flex-start;
-
   gap:12px;
-
   margin-bottom:8px;
 }
 
@@ -376,9 +257,7 @@ input[type="range"]{
 
 .formula-display{
   font-size:1.08rem;
-
   font-weight:700;
-
   overflow-wrap:anywhere;
 }
 
@@ -388,10 +267,62 @@ input[type="range"]{
   min-width:0;
 }
 
+/* =========================================================
+   ECUACIONES GEOMÉTRICAS
+========================================================= */
+
+.equations{
+  margin-top:14px;
+  display:grid;
+  gap:10px;
+}
+
+.equation-card{
+  display:none;
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#f8f9fc;
+}
+
+.equation-card.visible{
+  display:block;
+}
+
+.equation-card h3{
+  margin:0 0 8px;
+  font-size:.96rem;
+}
+
+.equation-math{
+  overflow-x:auto;
+  overflow-y:hidden;
+}
+
+.equation-math math-field{
+  border:0;
+  padding:4px 0;
+  min-height:auto;
+  background:transparent;
+  font-size:1.05rem;
+}
+
+.equation-math math-field[read-only]{
+  pointer-events:none;
+}
+
+.help{
+  max-width:1300px;
+  margin:-18px auto 30px;
+  padding:0 24px;
+  color:var(--muted);
+  font-size:.9rem;
+  line-height:1.5;
+}
+
 
 /* =========================================================
-   TABLETS
-   801px - 1050px
+   TABLET
 ========================================================= */
 
 @media(max-width:1050px){
@@ -410,7 +341,7 @@ input[type="range"]{
 
 
 /* =========================================================
-   TABLETS VERTICALES Y CELULARES GRANDES
+   TABLET VERTICAL
 ========================================================= */
 
 @media(max-width:800px){
@@ -421,14 +352,8 @@ input[type="range"]{
 
   main{
     grid-template-columns:1fr;
-
     padding:14px 16px 32px;
-
     gap:14px;
-  }
-
-  .controls{
-    gap:15px;
   }
 
   #plot{
@@ -437,7 +362,6 @@ input[type="range"]{
 
   .help{
     margin:-12px auto 26px;
-
     padding:0 16px;
   }
 
@@ -445,7 +369,7 @@ input[type="range"]{
 
 
 /* =========================================================
-   CELULARES
+   CELULAR
 ========================================================= */
 
 @media(max-width:500px){
@@ -458,10 +382,6 @@ input[type="range"]{
     font-size:1.55rem;
   }
 
-  header p{
-    font-size:.92rem;
-  }
-
   main{
     padding:12px 10px 28px;
     gap:12px;
@@ -469,27 +389,12 @@ input[type="range"]{
 
   .card{
     padding:12px;
-
-    border-radius:12px;
   }
 
-  .vector-function{
-    padding:12px;
-  }
-
-  /*
-    t mínimo y t máximo pasan
-    a estar uno debajo del otro.
-  */
-
-  .interval-row{
+  .interval-row,
+  .geometry-buttons{
     grid-template-columns:1fr;
-    gap:12px;
   }
-
-  /*
-    Encabezado de gráfica vertical.
-  */
 
   .graph-head{
     flex-direction:column;
@@ -500,16 +405,8 @@ input[type="range"]{
     width:100%;
   }
 
-  /*
-    Campos matemáticos más cómodos
-    para interacción táctil.
-  */
-
   math-field{
     min-height:54px;
-
-    padding:9px 8px;
-
     font-size:1.08rem;
   }
 
@@ -517,51 +414,17 @@ input[type="range"]{
     min-height:48px;
   }
 
-  /*
-    Gráfica más proporcionada
-    para pantalla vertical.
-  */
-
   #plot{
     height:420px;
   }
 
-  .coords{
-    font-size:.96rem;
-  }
-
-  .help-box{
-    font-size:.85rem;
-  }
-
 }
 
-
-/* =========================================================
-   CELULARES MUY ESTRECHOS
-========================================================= */
-
 @media(max-width:360px){
-
-  header h1{
-    font-size:1.4rem;
-  }
 
   main{
     padding-left:8px;
     padding-right:8px;
-  }
-
-  .card{
-    padding:10px;
-  }
-
-  .vector-function{
-    padding:10px;
-  }
-
-  math-field{
-    font-size:1rem;
   }
 
   #plot{
@@ -570,16 +433,7 @@ input[type="range"]{
 
 }
 
-
-/* =========================================================
-   ORIENTACIÓN HORIZONTAL EN DISPOSITIVOS MÓVILES
-========================================================= */
-
-@media(
-  max-width:900px
-)
-and
-(orientation:landscape){
+@media(max-width:900px) and (orientation:landscape){
 
   #plot{
     height:430px;
@@ -590,19 +444,16 @@ and
 </style>
 </head>
 
-
 <body>
 
 <header>
 
-  <h1>
-    Visualizador de funciones vectoriales
-  </h1>
+<h1>Visualizador de funciones vectoriales</h1>
 
-  <p>
-    Introduce libremente una función vectorial y explora
-    su trayectoria en ℝ² o ℝ³.
-  </p>
+<p>
+Introduce una función vectorial, explora su trayectoria y analiza
+la recta tangente y el plano normal en un punto de la curva.
+</p>
 
 </header>
 
@@ -611,308 +462,344 @@ and
 
 
 <!-- =====================================================
-     PANEL DE CONTROL
+     CONTROLES
 ===================================================== -->
 
 <section class="card controls">
 
 
-  <!-- ESPACIO -->
+<div>
 
-  <div>
+<label>Espacio</label>
 
-    <label>
-      Espacio
-    </label>
+<div class="space-buttons">
 
-    <div class="space-buttons">
+<button id="btn2" type="button">
+ℝ²
+</button>
 
-      <button
-        id="btn2"
-        type="button">
+<button id="btn3" type="button" class="active">
+ℝ³
+</button>
 
-        ℝ²
+</div>
 
-      </button>
+</div>
 
-      <button
-        id="btn3"
-        type="button"
-        class="active">
 
-        ℝ³
+<!-- FUNCIÓN VECTORIAL -->
 
-      </button>
+<div class="vector-function">
 
-    </div>
+<div class="vector-title">
+Función vectorial
+</div>
 
-  </div>
 
+<div class="component">
 
-  <!-- FUNCIÓN VECTORIAL -->
+<label for="fx">
+x(t)
+</label>
 
-  <div class="vector-function">
+<math-field id="fx">
+\cos(t)
+</math-field>
 
-    <div class="vector-title">
-      Función vectorial
-    </div>
+</div>
 
 
-    <div class="component">
+<div class="component">
 
-      <label for="fx">
-        x(t)
-      </label>
+<label for="fy">
+y(t)
+</label>
 
-      <math-field id="fx">
-        \cos(t)
-      </math-field>
+<math-field id="fy">
+\sin(t)
+</math-field>
 
-    </div>
+</div>
 
 
-    <div class="component">
+<div class="component" id="zGroup">
 
-      <label for="fy">
-        y(t)
-      </label>
+<label for="fz">
+z(t)
+</label>
 
-      <math-field id="fy">
-        \sin(t)
-      </math-field>
+<math-field id="fz">
+\frac{t}{3}
+</math-field>
 
-    </div>
+</div>
 
+</div>
 
-    <div
-      class="component"
-      id="zGroup">
 
-      <label for="fz">
-        z(t)
-      </label>
+<!-- INTERVALO -->
 
-      <math-field id="fz">
-        \frac{t}{3}
-      </math-field>
+<div>
 
-    </div>
+<label>
+Intervalo del parámetro
+</label>
 
-  </div>
+<div class="interval-row">
 
+<div>
 
-  <!-- INTERVALO -->
+<label for="tmin">
+t mínimo
+</label>
 
-  <div>
+<math-field id="tmin">
+-4\pi
+</math-field>
 
-    <label>
-      Intervalo del parámetro
-    </label>
+</div>
 
 
-    <div class="interval-row">
+<div>
 
+<label for="tmax">
+t máximo
+</label>
 
-      <div>
+<math-field id="tmax">
+4\pi
+</math-field>
 
-        <label for="tmin">
-          t mínimo
-        </label>
+</div>
 
-        <math-field id="tmin">
-          -4\pi
-        </math-field>
+</div>
 
-      </div>
+</div>
 
 
-      <div>
+<button
+id="draw"
+class="primary"
+type="button">
 
-        <label for="tmax">
-          t máximo
-        </label>
+Graficar
 
-        <math-field id="tmax">
-          4\pi
-        </math-field>
+</button>
 
-      </div>
 
+<!-- EXPLORADOR -->
 
-    </div>
+<div>
 
-  </div>
+<label for="slider">
+Punto de análisis t₀
+</label>
 
+<input
+id="slider"
+type="range"
+min="0"
+max="1000"
+value="500">
 
-  <!-- GRAFICAR -->
+<div id="tValue" class="small">
+t₀ = 0
+</div>
 
-  <button
-    id="draw"
-    class="primary"
-    type="button">
+</div>
 
-    Graficar
 
-  </button>
+<div id="coords" class="coords">
 
+<strong>P(t₀)</strong>
 
-  <!-- DESLIZADOR -->
+</div>
 
-  <div>
 
-    <label for="slider">
-      Explorar el parámetro t
-    </label>
+<!-- GEOMETRÍA -->
 
-    <input
-      id="slider"
-      type="range"
-      min="0"
-      max="1000"
-      value="500"
-    >
+<div class="geometry-panel">
 
-    <div
-      id="tValue"
-      class="small">
+<div class="geometry-title">
+Geometría en P(t₀)
+</div>
 
-      t = 0
+<div class="geometry-buttons">
 
-    </div>
+<button
+id="toggleTangent"
+type="button">
 
-  </div>
+Mostrar recta tangente
 
+</button>
 
-  <!-- COORDENADAS -->
 
-  <div
-    id="coords"
-    class="coords">
+<button
+id="toggleNormal"
+type="button">
 
-    <strong>P(t)</strong>
+Mostrar plano normal
 
-  </div>
+</button>
 
+</div>
 
-  <!-- ADVERTENCIAS -->
+<div class="small" style="margin-top:10px">
 
-  <div id="warning"></div>
+Al mover el deslizador, los objetos geométricos
+se actualizan automáticamente.
 
-  <div
-    id="error"
-    class="small">
-  </div>
+</div>
 
+</div>
 
-  <!-- AYUDA -->
 
-  <div class="help-box">
+<div id="warning"></div>
 
-    <strong>
-      Entrada matemática libre
-    </strong>
+<div id="error" class="small"></div>
 
-    <br><br>
 
-    Escribe directamente las componentes de la
-    función vectorial.
+<div class="help-box">
 
-    <br><br>
+<strong>Entrada matemática libre</strong>
 
-    Por ejemplo:
+<br><br>
 
-    <br>
+Puedes introducir funciones trigonométricas,
+potencias, raíces, exponenciales, logaritmos,
+fracciones y expresiones con π.
 
-    √t,
-    sin(t),
-    cos(2t),
-    t²,
-    t³,
-    |t|,
-    e<sup>−t</sup>,
-    fracciones y raíces.
+<br><br>
 
-    <br><br>
+Ejemplo:
 
-    También puedes utilizar π en el intervalo:
+<br>
 
-    <br>
+x(t) = cos(t)
 
-    −2π,
-    π/2,
-    4π,
-    8π, etc.
+<br>
 
-  </div>
+y(t) = sin(t)
+
+<br>
+
+z(t) = t/3
+
+<br>
+
+−4π ≤ t ≤ 4π
+
+</div>
 
 
 </section>
 
 
 <!-- =====================================================
-     PANEL DE LA GRÁFICA
+     GRÁFICA
 ===================================================== -->
 
 <section class="card">
 
 
-  <div class="graph-head">
+<div class="graph-head">
+
+<div>
+
+<div
+id="formula"
+class="formula-display">
+</div>
+
+<div
+id="subtitle"
+class="small">
+
+Curva parametrizada en ℝ³
+
+</div>
+
+</div>
 
 
-    <div>
+<button
+id="reset"
+type="button">
 
-      <div
-        id="formula"
-        class="formula-display">
-      </div>
+Restablecer vista
 
-      <div
-        id="subtitle"
-        class="small">
+</button>
 
-        Curva parametrizada en ℝ³
-
-      </div>
-
-    </div>
+</div>
 
 
-    <button
-      id="reset"
-      type="button">
-
-      Restablecer vista
-
-    </button>
+<div id="plot"></div>
 
 
-  </div>
+<!-- ECUACIONES -->
+
+<div class="equations">
 
 
-  <div id="plot"></div>
+<div
+id="tangentEquationCard"
+class="equation-card">
+
+<h3>
+Recta tangente en P(t₀)
+</h3>
+
+<div class="equation-math">
+
+<math-field
+id="tangentEquation"
+read-only>
+</math-field>
+
+</div>
+
+</div>
+
+
+<div
+id="normalEquationCard"
+class="equation-card">
+
+<h3 id="normalEquationTitle">
+Plano normal en P(t₀)
+</h3>
+
+<div class="equation-math">
+
+<math-field
+id="normalEquation"
+read-only>
+</math-field>
+
+</div>
+
+</div>
+
+
+</div>
 
 
 </section>
-
 
 </main>
 
 
 <div class="help">
 
-  El punto <strong>P(t)</strong> se desplaza sobre
-  la trayectoria al mover el deslizador.
+En ℝ³, la recta tangente tiene como vector director
+<strong>r′(t₀)</strong> y el plano normal tiene
+<strong>r′(t₀)</strong> como vector normal.
 
-  En ℝ³ puedes arrastrar la gráfica para rotarla
-  y utilizar los gestos táctiles o la rueda del ratón
-  para acercarte o alejarte.
+En ℝ² se muestra la recta normal en lugar de un plano normal.
 
 </div>
 
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
 
 <script type="module">
 
@@ -927,840 +814,1912 @@ import {
 from "https://cdn.jsdelivr.net/npm/@cortex-js/compute-engine/+esm";
 
 
-const ce = new ComputeEngine();
+const ce =
+new ComputeEngine();
 
 
 /* ========================================================
-   VARIABLES GENERALES
+   ESTADO
 ======================================================== */
 
 let dimension = 3;
 
 let functions = null;
 
-let intervalA = -4 * Math.PI;
+let intervalA =
+-4*Math.PI;
 
-let intervalB = 4 * Math.PI;
+let intervalB =
+4*Math.PI;
+
+let showTangent =
+false;
+
+let showNormal =
+false;
 
 
-const $ = id =>
-  document.getElementById(id);
+const $ =
+id =>
+document.getElementById(id);
 
 
 const fx =
-  $("fx");
+$("fx");
 
 const fy =
-  $("fy");
+$("fy");
 
 const fz =
-  $("fz");
+$("fz");
 
 const tmin =
-  $("tmin");
+$("tmin");
 
 const tmax =
-  $("tmax");
+$("tmax");
 
 const slider =
-  $("slider");
+$("slider");
 
 
 /* ========================================================
-   OBTENER LATEX DE MATHLIVE
+   MATHLIVE
 ======================================================== */
 
 function getLatex(field){
 
-  return field.getValue("latex");
+return field.getValue("latex");
 
 }
 
 
 /* ========================================================
-   INTERPRETAR UNA EXPRESIÓN
+   PARSER
 ======================================================== */
 
 function parseExpression(latex){
 
-  if(
-    !latex ||
-    !latex.trim()
-  ){
+if(
+!latex ||
+!latex.trim()
+){
 
-    throw new Error(
-      "Hay una expresión matemática vacía."
-    );
+throw new Error(
+"Hay una expresión matemática vacía."
+);
 
-  }
+}
 
-
-  return ce.parse(latex);
+return ce.parse(latex);
 
 }
 
 
 /* ========================================================
-   EVALUAR EXPRESIÓN EN t
+   EVALUACIÓN
 ======================================================== */
 
-function evaluateAt(expression,t){
+function evaluateAt(
+expression,
+t
+){
 
-  try{
+try{
 
-    const substituted =
-      expression.subs({
-        t:t
-      });
-
-
-    const numeric =
-      substituted.N();
-
-
-    const value =
-      numeric.numericValue;
+const substituted =
+expression.subs({
+t:t
+});
 
 
-    if(
-      typeof value === "number" &&
-      Number.isFinite(value)
-    ){
-
-      return value;
-
-    }
+const numeric =
+substituted.N();
 
 
-    const alternative =
-      Number(
-        numeric.valueOf()
-      );
+const value =
+numeric.numericValue;
 
 
-    if(
-      Number.isFinite(alternative)
-    ){
+if(
+typeof value === "number" &&
+Number.isFinite(value)
+){
 
-      return alternative;
+return value;
 
-    }
+}
 
 
-    return NaN;
+const alternative =
+Number(
+numeric.valueOf()
+);
 
-  }
 
-  catch(error){
+if(
+Number.isFinite(alternative)
+){
 
-    return NaN;
+return alternative;
 
-  }
+}
+
+
+return NaN;
+
+}
+
+catch{
+
+return NaN;
+
+}
 
 }
 
 
 /* ========================================================
-   EVALUAR CONSTANTES DEL INTERVALO
+   CONSTANTES
 ======================================================== */
 
 function evaluateConstant(latex){
 
-  const expression =
-    parseExpression(latex);
+const expression =
+parseExpression(latex);
 
 
-  const numeric =
-    expression.N();
+const numeric =
+expression.N();
 
 
-  const value =
-    numeric.numericValue;
+const value =
+numeric.numericValue;
 
 
-  if(
-    typeof value === "number" &&
-    Number.isFinite(value)
-  ){
+if(
+typeof value === "number" &&
+Number.isFinite(value)
+){
 
-    return value;
+return value;
 
-  }
-
-
-  const alternative =
-    Number(
-      numeric.valueOf()
-    );
+}
 
 
-  if(
-    Number.isFinite(alternative)
-  ){
-
-    return alternative;
-
-  }
+const alternative =
+Number(
+numeric.valueOf()
+);
 
 
-  throw new Error(
-    "No se pudo interpretar uno de los extremos del intervalo."
-  );
+if(
+Number.isFinite(alternative)
+){
+
+return alternative;
+
+}
+
+
+throw new Error(
+"No se pudo interpretar uno de los extremos del intervalo."
+);
 
 }
 
 
 /* ========================================================
-   CAMBIAR DIMENSIÓN
+   DERIVADA NUMÉRICA
+======================================================== */
+
+function numericalDerivative(
+expression,
+t
+){
+
+/*
+  Diferencia central.
+
+  El tamaño de h se adapta a la escala
+  del parámetro.
+*/
+
+const h =
+1e-5 *
+Math.max(
+1,
+Math.abs(t)
+);
+
+
+const fp =
+evaluateAt(
+expression,
+t+h
+);
+
+
+const fm =
+evaluateAt(
+expression,
+t-h
+);
+
+
+if(
+!Number.isFinite(fp) ||
+!Number.isFinite(fm)
+){
+
+/*
+  Si la diferencia central falla,
+  intentamos una diferencia hacia adelante.
+*/
+
+const f0 =
+evaluateAt(
+expression,
+t
+);
+
+
+const f1 =
+evaluateAt(
+expression,
+t+h
+);
+
+
+if(
+Number.isFinite(f0) &&
+Number.isFinite(f1)
+){
+
+return (f1-f0)/h;
+
+}
+
+
+return NaN;
+
+}
+
+
+return (
+fp-fm
+) /
+(
+2*h
+);
+
+}
+
+
+/* ========================================================
+   DIMENSIÓN
 ======================================================== */
 
 function setDimension(d){
 
-  dimension = d;
+dimension = d;
 
 
-  $("zGroup").style.display =
-    d === 3
-      ? "block"
-      : "none";
+$("zGroup").style.display =
+d === 3
+? "block"
+: "none";
 
 
-  $("btn2").classList.toggle(
-    "active",
-    d === 2
-  );
+$("btn2").classList.toggle(
+"active",
+d === 2
+);
 
 
-  $("btn3").classList.toggle(
-    "active",
-    d === 3
-  );
+$("btn3").classList.toggle(
+"active",
+d === 3
+);
 
 
-  $("subtitle").textContent =
-
-    "Curva parametrizada en " +
-
-    (
-      d === 3
-        ? "ℝ³"
-        : "ℝ²"
-    );
+$("normalEquationTitle").textContent =
+d === 3
+? "Plano normal en P(t₀)"
+: "Recta normal en P(t₀)";
 
 
-  draw();
+updateGeometryButtons();
+
+draw();
 
 }
 
 
 /* ========================================================
-   VALOR ACTUAL DE t
+   t ACTUAL
 ======================================================== */
 
 function currentT(){
 
-  const position =
-
-    Number(slider.value)
-    /
-    1000;
+const position =
+Number(slider.value)
+/ 1000;
 
 
-  return intervalA +
-
-    (
-      intervalB -
-      intervalA
-    )
-
-    *
-
-    position;
+return intervalA +
+(
+intervalB -
+intervalA
+)
+*
+position;
 
 }
 
 
 /* ========================================================
-   CALCULAR LA CURVA
+   CALCULAR CURVA
 ======================================================== */
 
 function calculate(){
 
-  const a =
-    evaluateConstant(
-      getLatex(tmin)
-    );
+const a =
+evaluateConstant(
+getLatex(tmin)
+);
 
 
-  const b =
-    evaluateConstant(
-      getLatex(tmax)
-    );
+const b =
+evaluateConstant(
+getLatex(tmax)
+);
 
 
-  if(
-    !Number.isFinite(a) ||
-    !Number.isFinite(b)
-  ){
+if(
+!Number.isFinite(a) ||
+!Number.isFinite(b)
+){
 
-    throw new Error(
-      "Los extremos del intervalo deben ser números reales."
-    );
+throw new Error(
+"Los extremos deben ser números reales."
+);
 
-  }
+}
 
 
-  if(a >= b){
+if(a >= b){
 
-    throw new Error(
-      "Debe cumplirse t mínimo < t máximo."
-    );
+throw new Error(
+"Debe cumplirse t mínimo < t máximo."
+);
 
-  }
+}
 
 
-  intervalA = a;
+intervalA = a;
 
-  intervalB = b;
+intervalB = b;
 
 
-  const X =
-    parseExpression(
-      getLatex(fx)
-    );
+const X =
+parseExpression(
+getLatex(fx)
+);
 
 
-  const Y =
-    parseExpression(
-      getLatex(fy)
-    );
+const Y =
+parseExpression(
+getLatex(fy)
+);
 
 
-  const Z =
-    dimension === 3
+const Z =
+dimension === 3
+?
+parseExpression(
+getLatex(fz)
+)
+:
+ce.parse("0");
 
-      ? parseExpression(
-          getLatex(fz)
-        )
 
-      : ce.parse("0");
+const xs = [];
+const ys = [];
+const zs = [];
 
 
-  const xs = [];
+const N =
+1200;
 
-  const ys = [];
 
-  const zs = [];
+let invalidPoints =
+0;
 
 
-  /*
-    Número de puntos utilizados para
-    aproximar la curva.
-  */
+for(
+let i=0;
+i<=N;
+i++
+){
 
-  const N = 1200;
+const t =
+a +
+(b-a)
+*
+i/N;
 
 
-  let invalidPoints = 0;
+const x =
+evaluateAt(X,t);
 
+const y =
+evaluateAt(Y,t);
 
-  for(
-    let i=0;
-    i<=N;
-    i++
-  ){
+const z =
+evaluateAt(Z,t);
 
-    const t =
 
-      a +
+const valid =
+dimension === 3
+?
+(
+Number.isFinite(x) &&
+Number.isFinite(y) &&
+Number.isFinite(z)
+)
+:
+(
+Number.isFinite(x) &&
+Number.isFinite(y)
+);
 
-      (b-a)
-      *
-      i/N;
 
+if(valid){
 
-    const x =
-      evaluateAt(X,t);
+xs.push(x);
+ys.push(y);
+zs.push(z);
 
+}
 
-    const y =
-      evaluateAt(Y,t);
+else{
 
+xs.push(null);
+ys.push(null);
+zs.push(null);
 
-    const z =
-      evaluateAt(Z,t);
+invalidPoints++;
 
+}
 
-    const valid =
+}
 
-      dimension === 3
 
-      ? (
-          Number.isFinite(x) &&
-          Number.isFinite(y) &&
-          Number.isFinite(z)
-        )
+return {
 
-      : (
-          Number.isFinite(x) &&
-          Number.isFinite(y)
-        );
+X,
+Y,
+Z,
 
+xs,
+ys,
+zs,
 
-    if(valid){
+invalidPoints,
 
-      xs.push(x);
+totalPoints:N+1
 
-      ys.push(y);
-
-      zs.push(z);
-
-    }
-
-    else{
-
-      /*
-        null interrumpe la curva
-        en los puntos donde no está definida.
-      */
-
-      xs.push(null);
-
-      ys.push(null);
-
-      zs.push(null);
-
-      invalidPoints++;
-
-    }
-
-  }
-
-
-  return {
-
-    X,
-    Y,
-    Z,
-
-    xs,
-    ys,
-    zs,
-
-    invalidPoints,
-
-    totalPoints:N+1
-
-  };
+};
 
 }
 
 
 /* ========================================================
-   CONFIGURACIÓN DE LA GRÁFICA
+   DATOS GEOMÉTRICOS EN t0
 ======================================================== */
 
-function graphLayout(){
+function geometryAt(t){
 
-  const common = {
+if(!functions){
 
-    margin:{
-      l:50,
-      r:20,
-      b:50,
-      t:15
-    },
+return null;
 
-    paper_bgcolor:
-      "rgba(0,0,0,0)",
-
-    plot_bgcolor:
-      "rgba(0,0,0,0)",
-
-    showlegend:false,
-
-    autosize:true
-
-  };
+}
 
 
-  if(
-    dimension === 3
-  ){
+const x =
+evaluateAt(
+functions.X,
+t
+);
 
-    return {
+const y =
+evaluateAt(
+functions.Y,
+t
+);
 
-      ...common,
-
-      margin:{
-        l:0,
-        r:0,
-        b:0,
-        t:5
-      },
-
-      scene:{
-
-        xaxis:{
-          title:"x",
-          zeroline:true
-        },
-
-        yaxis:{
-          title:"y",
-          zeroline:true
-        },
-
-        zaxis:{
-          title:"z",
-          zeroline:true
-        },
-
-        aspectmode:"data"
-
-      }
-
-    };
-
-  }
+const z =
+evaluateAt(
+functions.Z,
+t
+);
 
 
-  return {
+const dx =
+numericalDerivative(
+functions.X,
+t
+);
 
-    ...common,
+const dy =
+numericalDerivative(
+functions.Y,
+t
+);
 
-    xaxis:{
-      title:"x",
-      zeroline:true,
-      automargin:true
-    },
+const dz =
+dimension === 3
+?
+numericalDerivative(
+functions.Z,
+t
+)
+:
+0;
 
-    yaxis:{
-      title:"y",
-      zeroline:true,
-      scaleanchor:"x",
-      scaleratio:1,
-      automargin:true
-    }
 
-  };
+const validPoint =
+dimension === 3
+?
+(
+Number.isFinite(x) &&
+Number.isFinite(y) &&
+Number.isFinite(z)
+)
+:
+(
+Number.isFinite(x) &&
+Number.isFinite(y)
+);
+
+
+const validDerivative =
+dimension === 3
+?
+(
+Number.isFinite(dx) &&
+Number.isFinite(dy) &&
+Number.isFinite(dz)
+)
+:
+(
+Number.isFinite(dx) &&
+Number.isFinite(dy)
+);
+
+
+const norm =
+Math.sqrt(
+dx*dx +
+dy*dy +
+dz*dz
+);
+
+
+return {
+
+t,
+
+x,
+y,
+z,
+
+dx,
+dy,
+dz,
+
+norm,
+
+valid:
+validPoint &&
+validDerivative &&
+norm > 1e-9
+
+};
 
 }
 
 
 /* ========================================================
-   CONFIGURACIÓN DE PLOTLY
-======================================================== */
-
-function plotConfig(){
-
-  return {
-
-    responsive:true,
-
-    displaylogo:false,
-
-    scrollZoom:true,
-
-    doubleClick:"reset",
-
-    modeBarButtonsToRemove:[
-      "lasso2d",
-      "select2d"
-    ]
-
-  };
-
-}
-
-
-/* ========================================================
-   FORMATO DE NÚMEROS
+   FORMATO
 ======================================================== */
 
 function fmt(v){
 
-  if(
-    !Number.isFinite(v)
-  ){
-
-    return "no definido";
-
-  }
-
-
-  if(
-    Math.abs(v) < 1e-10
-  ){
-
-    return "0";
-
-  }
-
-
-  const abs =
-    Math.abs(v);
-
-
-  if(
-    abs >= 10000 ||
-    abs < 0.0001
-  ){
-
-    return v.toExponential(4);
-
-  }
-
-
-  return Number(
-    v.toFixed(4)
-  ).toString();
-
-}
-
-
-/* ========================================================
-   ACTUALIZAR PUNTO
-======================================================== */
-
-function updatePoint(
-  updateGraph=true
+if(
+!Number.isFinite(v)
 ){
 
-  if(
-    !functions
-  ){
+return "no definido";
 
-    return;
-
-  }
+}
 
 
-  const t =
-    currentT();
+if(
+Math.abs(v) <
+1e-9
+){
+
+return "0";
+
+}
 
 
-  const x =
-    evaluateAt(
-      functions.X,
-      t
-    );
+const abs =
+Math.abs(v);
 
 
-  const y =
-    evaluateAt(
-      functions.Y,
-      t
-    );
+if(
+abs >= 10000 ||
+abs < 0.0001
+){
+
+return v.toExponential(4);
+
+}
 
 
-  const z =
-    evaluateAt(
-      functions.Z,
-      t
-    );
-
-
-  $("tValue").textContent =
-
-    "t = " +
-    fmt(t);
-
-
-  if(
-    dimension === 3
-  ){
-
-    $("coords").innerHTML =
-
-      "<strong>P(t)</strong> = (" +
-
-      fmt(x) + ", " +
-
-      fmt(y) + ", " +
-
-      fmt(z) +
-
-      ")";
-
-  }
-
-  else{
-
-    $("coords").innerHTML =
-
-      "<strong>P(t)</strong> = (" +
-
-      fmt(x) + ", " +
-
-      fmt(y) +
-
-      ")";
-
-  }
-
-
-  if(
-    !updateGraph
-  ){
-
-    return;
-
-  }
-
-
-  const valid =
-
-    dimension === 3
-
-    ? (
-        Number.isFinite(x) &&
-        Number.isFinite(y) &&
-        Number.isFinite(z)
-      )
-
-    : (
-        Number.isFinite(x) &&
-        Number.isFinite(y)
-      );
-
-
-  if(
-    dimension === 3
-  ){
-
-    Plotly.restyle(
-
-      "plot",
-
-      {
-
-        x:[
-          valid
-          ? [x]
-          : []
-        ],
-
-        y:[
-          valid
-          ? [y]
-          : []
-        ],
-
-        z:[
-          valid
-          ? [z]
-          : []
-        ]
-
-      },
-
-      [1]
-
-    );
-
-  }
-
-  else{
-
-    Plotly.restyle(
-
-      "plot",
-
-      {
-
-        x:[
-          valid
-          ? [x]
-          : []
-        ],
-
-        y:[
-          valid
-          ? [y]
-          : []
-        ]
-
-      },
-
-      [1]
-
-    );
-
-  }
+return Number(
+v.toFixed(4)
+).toString();
 
 }
 
 
 /* ========================================================
-   MOSTRAR FUNCIÓN ACTUAL
+   FORMATO LATEX
+======================================================== */
+
+function latexNumber(v){
+
+if(
+Math.abs(v) <
+1e-9
+){
+
+return "0";
+
+}
+
+
+return Number(
+v.toFixed(4)
+).toString();
+
+}
+
+
+function signedLatex(v){
+
+if(v >= 0){
+
+return "+ " +
+latexNumber(v);
+
+}
+
+return "- " +
+latexNumber(
+Math.abs(v)
+);
+
+}
+
+
+function shiftedVariable(
+variable,
+value
+){
+
+if(
+Math.abs(value) <
+1e-9
+){
+
+return variable;
+
+}
+
+
+if(value > 0){
+
+return variable +
+"-" +
+latexNumber(value);
+
+}
+
+
+return variable +
+"+" +
+latexNumber(
+Math.abs(value)
+);
+
+}
+
+
+/* ========================================================
+   ESCALA PARA RECTA Y PLANO
+======================================================== */
+
+function geometryScale(){
+
+const values = [];
+
+
+for(
+const arr of [
+functions.xs,
+functions.ys,
+functions.zs
+]
+){
+
+for(
+const value of arr
+){
+
+if(
+Number.isFinite(value)
+){
+
+values.push(
+Math.abs(value)
+);
+
+}
+
+}
+
+}
+
+
+if(
+values.length === 0
+){
+
+return 1;
+
+}
+
+
+const maximum =
+Math.max(...values);
+
+
+return Math.max(
+1,
+maximum * 0.45
+);
+
+}
+
+
+/* ========================================================
+   RECTA TANGENTE
+======================================================== */
+
+function tangentTrace(g){
+
+if(
+!g ||
+!g.valid
+){
+
+return null;
+
+}
+
+
+const scale =
+geometryScale();
+
+
+const tangentNorm =
+g.norm;
+
+
+const ux =
+g.dx /
+tangentNorm;
+
+const uy =
+g.dy /
+tangentNorm;
+
+const uz =
+g.dz /
+tangentNorm;
+
+
+const length =
+scale;
+
+
+const x1 =
+g.x -
+length*ux;
+
+const x2 =
+g.x +
+length*ux;
+
+
+const y1 =
+g.y -
+length*uy;
+
+const y2 =
+g.y +
+length*uy;
+
+
+if(
+dimension === 3
+){
+
+const z1 =
+g.z -
+length*uz;
+
+const z2 =
+g.z +
+length*uz;
+
+
+return {
+
+type:"scatter3d",
+
+mode:"lines",
+
+x:[x1,x2],
+
+y:[y1,y2],
+
+z:[z1,z2],
+
+line:{
+width:7
+},
+
+name:"Recta tangente",
+
+hovertemplate:
+"Recta tangente<extra></extra>"
+
+};
+
+}
+
+
+return {
+
+type:"scatter",
+
+mode:"lines",
+
+x:[x1,x2],
+
+y:[y1,y2],
+
+line:{
+width:4
+},
+
+name:"Recta tangente",
+
+hovertemplate:
+"Recta tangente<extra></extra>"
+
+};
+
+}
+
+
+/* ========================================================
+   PLANO NORMAL EN R3
+======================================================== */
+
+function normalPlaneTrace(g){
+
+if(
+dimension !== 3 ||
+!g ||
+!g.valid
+){
+
+return null;
+
+}
+
+
+/*
+  n = vector tangente unitario.
+*/
+
+const nx =
+g.dx/g.norm;
+
+const ny =
+g.dy/g.norm;
+
+const nz =
+g.dz/g.norm;
+
+
+/*
+  Construimos dos vectores ortogonales
+  contenidos en el plano normal.
+*/
+
+let ax;
+let ay;
+let az;
+
+
+if(
+Math.abs(nx) < 0.9
+){
+
+ax = 1;
+ay = 0;
+az = 0;
+
+}
+
+else{
+
+ax = 0;
+ay = 1;
+az = 0;
+
+}
+
+
+/*
+  u = n × a
+*/
+
+let ux =
+ny*az -
+nz*ay;
+
+let uy =
+nz*ax -
+nx*az;
+
+let uz =
+nx*ay -
+ny*ax;
+
+
+const un =
+Math.sqrt(
+ux*ux +
+uy*uy +
+uz*uz
+);
+
+
+ux /= un;
+uy /= un;
+uz /= un;
+
+
+/*
+  v = n × u
+*/
+
+const vx =
+ny*uz -
+nz*uy;
+
+const vy =
+nz*ux -
+nx*uz;
+
+const vz =
+nx*uy -
+ny*ux;
+
+
+const size =
+geometryScale()
+*
+0.65;
+
+
+const steps =
+9;
+
+
+const X = [];
+const Y = [];
+const Z = [];
+
+
+for(
+let i=0;
+i<steps;
+i++
+){
+
+const rowX = [];
+const rowY = [];
+const rowZ = [];
+
+
+const a =
+-size +
+2*size*i/
+(steps-1);
+
+
+for(
+let j=0;
+j<steps;
+j++
+){
+
+const b =
+-size +
+2*size*j/
+(steps-1);
+
+
+rowX.push(
+g.x +
+a*ux +
+b*vx
+);
+
+
+rowY.push(
+g.y +
+a*uy +
+b*vy
+);
+
+
+rowZ.push(
+g.z +
+a*uz +
+b*vz
+);
+
+}
+
+
+X.push(rowX);
+Y.push(rowY);
+Z.push(rowZ);
+
+}
+
+
+return {
+
+type:"surface",
+
+x:X,
+y:Y,
+z:Z,
+
+opacity:0.35,
+
+showscale:false,
+
+name:"Plano normal",
+
+hoverinfo:"skip"
+
+};
+
+}
+
+
+/* ========================================================
+   RECTA NORMAL EN R2
+======================================================== */
+
+function normalLineTrace(g){
+
+if(
+dimension !== 2 ||
+!g ||
+!g.valid
+){
+
+return null;
+
+}
+
+
+/*
+  Un vector normal a (dx,dy) es
+  (-dy,dx).
+*/
+
+let nx =
+-g.dy;
+
+let ny =
+g.dx;
+
+
+const norm =
+Math.sqrt(
+nx*nx +
+ny*ny
+);
+
+
+nx /= norm;
+ny /= norm;
+
+
+const length =
+geometryScale();
+
+
+return {
+
+type:"scatter",
+
+mode:"lines",
+
+x:[
+g.x-length*nx,
+g.x+length*nx
+],
+
+y:[
+g.y-length*ny,
+g.y+length*ny
+],
+
+line:{
+width:4,
+dash:"dash"
+},
+
+name:"Recta normal",
+
+hovertemplate:
+"Recta normal<extra></extra>"
+
+};
+
+}
+
+
+/* ========================================================
+   ECUACIONES
+======================================================== */
+
+function updateEquations(g){
+
+if(
+!g ||
+!g.valid
+){
+
+$("tangentEquation").value =
+"\\text{No definida}";
+
+$("normalEquation").value =
+"\\text{No definido}";
+
+return;
+
+}
+
+
+/* RECTa TANGENTE */
+
+if(
+dimension === 3
+){
+
+$("tangentEquation").value =
+
+"\\mathbf{L}(s)=" +
+
+"\\begin{pmatrix}" +
+
+latexNumber(g.x) +
+
+"\\\\" +
+
+latexNumber(g.y) +
+
+"\\\\" +
+
+latexNumber(g.z) +
+
+"\\end{pmatrix}" +
+
+"+s" +
+
+"\\begin{pmatrix}" +
+
+latexNumber(g.dx) +
+
+"\\\\" +
+
+latexNumber(g.dy) +
+
+"\\\\" +
+
+latexNumber(g.dz) +
+
+"\\end{pmatrix}";
+
+}
+
+else{
+
+$("tangentEquation").value =
+
+"\\mathbf{L}(s)=" +
+
+"\\begin{pmatrix}" +
+
+latexNumber(g.x) +
+
+"\\\\" +
+
+latexNumber(g.y) +
+
+"\\end{pmatrix}" +
+
+"+s" +
+
+"\\begin{pmatrix}" +
+
+latexNumber(g.dx) +
+
+"\\\\" +
+
+latexNumber(g.dy) +
+
+"\\end{pmatrix}";
+
+}
+
+
+/* PLANO / RECTA NORMAL */
+
+if(
+dimension === 3
+){
+
+$("normalEquation").value =
+
+latexNumber(g.dx) +
+
+"\\left(" +
+
+shiftedVariable(
+"x",
+g.x
+) +
+
+"\\right)" +
+
+signedLatex(g.dy) +
+
+"\\left(" +
+
+shiftedVariable(
+"y",
+g.y
+) +
+
+"\\right)" +
+
+signedLatex(g.dz) +
+
+"\\left(" +
+
+shiftedVariable(
+"z",
+g.z
+) +
+
+"\\right)=0";
+
+}
+
+else{
+
+/*
+  Recta normal:
+  P + s(-dy,dx)
+*/
+
+$("normalEquation").value =
+
+"\\mathbf{N}(s)=" +
+
+"\\begin{pmatrix}" +
+
+latexNumber(g.x) +
+
+"\\\\" +
+
+latexNumber(g.y) +
+
+"\\end{pmatrix}" +
+
+"+s" +
+
+"\\begin{pmatrix}" +
+
+latexNumber(-g.dy) +
+
+"\\\\" +
+
+latexNumber(g.dx) +
+
+"\\end{pmatrix}";
+
+}
+
+}
+
+
+/* ========================================================
+   BOTONES GEOMÉTRICOS
+======================================================== */
+
+function updateGeometryButtons(){
+
+$("toggleTangent").textContent =
+showTangent
+?
+"Ocultar recta tangente"
+:
+"Mostrar recta tangente";
+
+
+$("toggleTangent").classList.toggle(
+"on",
+showTangent
+);
+
+
+if(
+dimension === 3
+){
+
+$("toggleNormal").textContent =
+showNormal
+?
+"Ocultar plano normal"
+:
+"Mostrar plano normal";
+
+}
+
+else{
+
+$("toggleNormal").textContent =
+showNormal
+?
+"Ocultar recta normal"
+:
+"Mostrar recta normal";
+
+}
+
+
+$("toggleNormal").classList.toggle(
+"on",
+showNormal
+);
+
+
+$("tangentEquationCard").classList.toggle(
+"visible",
+showTangent
+);
+
+
+$("normalEquationCard").classList.toggle(
+"visible",
+showNormal
+);
+
+}
+
+
+/* ========================================================
+   LAYOUT
+======================================================== */
+
+function graphLayout(){
+
+const common = {
+
+margin:{
+l:50,
+r:20,
+b:50,
+t:15
+},
+
+paper_bgcolor:
+"rgba(0,0,0,0)",
+
+plot_bgcolor:
+"rgba(0,0,0,0)",
+
+showlegend:false,
+
+autosize:true
+
+};
+
+
+if(
+dimension === 3
+){
+
+return {
+
+...common,
+
+margin:{
+l:0,
+r:0,
+b:0,
+t:5
+},
+
+scene:{
+
+xaxis:{
+title:"x",
+zeroline:true
+},
+
+yaxis:{
+title:"y",
+zeroline:true
+},
+
+zaxis:{
+title:"z",
+zeroline:true
+},
+
+aspectmode:"data"
+
+}
+
+};
+
+}
+
+
+return {
+
+...common,
+
+xaxis:{
+title:"x",
+zeroline:true,
+automargin:true
+},
+
+yaxis:{
+title:"y",
+zeroline:true,
+scaleanchor:"x",
+scaleratio:1,
+automargin:true
+}
+
+};
+
+}
+
+
+/* ========================================================
+   CONFIGURACIÓN PLOTLY
+======================================================== */
+
+function plotConfig(){
+
+return {
+
+responsive:true,
+
+displaylogo:false,
+
+scrollZoom:true,
+
+doubleClick:"reset",
+
+modeBarButtonsToRemove:[
+"lasso2d",
+"select2d"
+]
+
+};
+
+}
+
+
+/* ========================================================
+   ACTUALIZAR FÓRMULA
 ======================================================== */
 
 function updateFormula(){
 
-  const x =
-    getLatex(fx);
+const x =
+getLatex(fx);
+
+const y =
+getLatex(fy);
+
+const z =
+getLatex(fz);
+
+const a =
+getLatex(tmin);
+
+const b =
+getLatex(tmax);
 
 
-  const y =
-    getLatex(fy);
+if(
+dimension === 3
+){
+
+$("formula").textContent =
+
+"r(t) = ⟨ " +
+
+x + ", " +
+
+y + ", " +
+
+z +
+
+" ⟩,   " +
+
+a +
+
+" ≤ t ≤ " +
+
+b;
+
+}
+
+else{
+
+$("formula").textContent =
+
+"r(t) = ⟨ " +
+
+x + ", " +
+
+y +
+
+" ⟩,   " +
+
+a +
+
+" ≤ t ≤ " +
+
+b;
+
+}
+
+}
 
 
-  const z =
-    getLatex(fz);
+/* ========================================================
+   CONSTRUIR TODOS LOS TRAZOS
+======================================================== */
+
+function buildTraces(){
+
+const t =
+currentT();
 
 
-  const a =
-    getLatex(tmin);
+const g =
+geometryAt(t);
 
 
-  const b =
-    getLatex(tmax);
+const data = [];
 
 
-  if(
-    dimension === 3
-  ){
+/* CURVA */
 
-    $("formula").textContent =
+if(
+dimension === 3
+){
 
-      "r(t) = ⟨ " +
+data.push({
 
-      x + ", " +
+type:"scatter3d",
 
-      y + ", " +
+mode:"lines",
 
-      z +
+x:functions.xs,
 
-      " ⟩,   " +
+y:functions.ys,
 
-      a +
+z:functions.zs,
 
-      " ≤ t ≤ " +
+line:{
+width:6
+},
 
-      b;
+connectgaps:false,
 
-  }
+name:"Trayectoria"
 
-  else{
+});
 
-    $("formula").textContent =
+}
 
-      "r(t) = ⟨ " +
+else{
 
-      x + ", " +
+data.push({
 
-      y +
+type:"scatter",
 
-      " ⟩,   " +
+mode:"lines",
 
-      a +
+x:functions.xs,
 
-      " ≤ t ≤ " +
+y:functions.ys,
 
-      b;
+line:{
+width:3
+},
 
-  }
+connectgaps:false,
+
+name:"Trayectoria"
+
+});
+
+}
+
+
+/* PUNTO */
+
+if(
+g &&
+Number.isFinite(g.x) &&
+Number.isFinite(g.y) &&
+(
+dimension === 2 ||
+Number.isFinite(g.z)
+)
+){
+
+if(
+dimension === 3
+){
+
+data.push({
+
+type:"scatter3d",
+
+mode:"markers",
+
+x:[g.x],
+
+y:[g.y],
+
+z:[g.z],
+
+marker:{
+size:7
+},
+
+name:"P(t₀)"
+
+});
+
+}
+
+else{
+
+data.push({
+
+type:"scatter",
+
+mode:"markers",
+
+x:[g.x],
+
+y:[g.y],
+
+marker:{
+size:10
+},
+
+name:"P(t₀)"
+
+});
+
+}
+
+}
+
+
+/* RECTA TANGENTE */
+
+if(
+showTangent
+){
+
+const trace =
+tangentTrace(g);
+
+if(trace){
+
+data.push(trace);
+
+}
+
+}
+
+
+/* PLANO / RECTA NORMAL */
+
+if(
+showNormal
+){
+
+const trace =
+dimension === 3
+?
+normalPlaneTrace(g)
+:
+normalLineTrace(g);
+
+
+if(trace){
+
+data.push(trace);
+
+}
+
+}
+
+
+return {
+data,
+g
+};
+
+}
+
+
+/* ========================================================
+   ACTUALIZAR PUNTO Y GEOMETRÍA
+======================================================== */
+
+function updatePoint(){
+
+if(
+!functions
+){
+
+return;
+
+}
+
+
+const result =
+buildTraces();
+
+
+const g =
+result.g;
+
+
+if(!g){
+
+return;
+
+}
+
+
+$("tValue").textContent =
+
+"t₀ = " +
+fmt(g.t);
+
+
+if(
+dimension === 3
+){
+
+$("coords").innerHTML =
+
+"<strong>P(t₀)</strong> = (" +
+
+fmt(g.x) + ", " +
+
+fmt(g.y) + ", " +
+
+fmt(g.z) +
+
+")<br>" +
+
+"<strong>r′(t₀)</strong> = (" +
+
+fmt(g.dx) + ", " +
+
+fmt(g.dy) + ", " +
+
+fmt(g.dz) +
+
+")";
+
+}
+
+else{
+
+$("coords").innerHTML =
+
+"<strong>P(t₀)</strong> = (" +
+
+fmt(g.x) + ", " +
+
+fmt(g.y) +
+
+")<br>" +
+
+"<strong>r′(t₀)</strong> = (" +
+
+fmt(g.dx) + ", " +
+
+fmt(g.dy) +
+
+")";
+
+}
+
+
+updateEquations(g);
+
+
+Plotly.react(
+
+"plot",
+
+result.data,
+
+graphLayout(),
+
+plotConfig()
+
+);
 
 }
 
@@ -1771,374 +2730,221 @@ function updateFormula(){
 
 function draw(){
 
-  try{
+try{
 
-    $("error").textContent =
-      "";
+$("error").textContent =
+"";
 
 
-    $("warning").style.display =
-      "none";
+$("warning").style.display =
+"none";
 
 
-    functions =
-      calculate();
+functions =
+calculate();
 
 
-    const validCount =
+const validCount =
 
-      functions.xs.filter(
-        value =>
-          value !== null
-      ).length;
+functions.xs.filter(
+value =>
+value !== null
+).length;
 
 
-    if(
-      validCount === 0
-    ){
+if(
+validCount === 0
+){
 
-      throw new Error(
-        "La función no tiene puntos reales definidos en el intervalo indicado."
-      );
+throw new Error(
+"La función no tiene puntos reales definidos en el intervalo indicado."
+);
 
-    }
+}
 
 
-    if(
-      functions.invalidPoints > 0
-    ){
+if(
+functions.invalidPoints > 0
+){
 
-      $("warning").style.display =
-        "block";
+$("warning").style.display =
+"block";
 
 
-      $("warning").textContent =
+$("warning").textContent =
 
-        "Advertencia: la función no está definida " +
+"Advertencia: la función no está definida " +
 
-        "para todos los valores del intervalo. " +
+"para todos los valores del intervalo. " +
 
-        "La gráfica muestra únicamente la parte real definida.";
+"La gráfica muestra únicamente la parte real definida.";
 
-    }
+}
 
 
-    /*
-      El deslizador inicia en el
-      punto medio del intervalo.
-    */
+slider.value =
+500;
 
-    slider.value =
-      500;
 
+updateFormula();
 
-    const t =
-      currentT();
+updateGeometryButtons();
 
+updatePoint();
 
-    const x =
-      evaluateAt(
-        functions.X,
-        t
-      );
 
+setTimeout(
+()=>{
 
-    const y =
-      evaluateAt(
-        functions.Y,
-        t
-      );
+Plotly.Plots.resize(
+$("plot")
+);
 
+},
+80
+);
 
-    const z =
-      evaluateAt(
-        functions.Z,
-        t
-      );
+}
 
+catch(error){
 
-    const initialValid =
+console.error(error);
 
-      dimension === 3
 
-      ? (
-          Number.isFinite(x) &&
-          Number.isFinite(y) &&
-          Number.isFinite(z)
-        )
+$("error").textContent =
 
-      : (
-          Number.isFinite(x) &&
-          Number.isFinite(y)
-        );
+"Error: " +
+error.message;
 
-
-    let data;
-
-
-    /* =====================================================
-       R3
-    ===================================================== */
-
-    if(
-      dimension === 3
-    ){
-
-      data = [
-
-        {
-
-          type:"scatter3d",
-
-          mode:"lines",
-
-          x:functions.xs,
-
-          y:functions.ys,
-
-          z:functions.zs,
-
-          line:{
-            width:6
-          },
-
-          connectgaps:false,
-
-          name:"Trayectoria"
-
-        },
-
-
-        {
-
-          type:"scatter3d",
-
-          mode:"markers",
-
-          x:
-            initialValid
-            ? [x]
-            : [],
-
-          y:
-            initialValid
-            ? [y]
-            : [],
-
-          z:
-            initialValid
-            ? [z]
-            : [],
-
-          marker:{
-            size:7
-          },
-
-          name:"P(t)"
-
-        }
-
-      ];
-
-    }
-
-
-    /* =====================================================
-       R2
-    ===================================================== */
-
-    else{
-
-      data = [
-
-        {
-
-          type:"scatter",
-
-          mode:"lines",
-
-          x:functions.xs,
-
-          y:functions.ys,
-
-          line:{
-            width:3
-          },
-
-          connectgaps:false,
-
-          name:"Trayectoria"
-
-        },
-
-
-        {
-
-          type:"scatter",
-
-          mode:"markers",
-
-          x:
-            initialValid
-            ? [x]
-            : [],
-
-          y:
-            initialValid
-            ? [y]
-            : [],
-
-          marker:{
-            size:10
-          },
-
-          name:"P(t)"
-
-        }
-
-      ];
-
-    }
-
-
-    Plotly.react(
-
-      "plot",
-
-      data,
-
-      graphLayout(),
-
-      plotConfig()
-
-    );
-
-
-    updateFormula();
-
-    updatePoint(false);
-
-
-    /*
-      Fuerza un reajuste del tamaño
-      después de renderizar.
-    */
-
-    setTimeout(
-      () => {
-
-        Plotly.Plots.resize(
-          $("plot")
-        );
-
-      },
-      80
-    );
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-
-    $("error").textContent =
-
-      "Error: " +
-      error.message;
-
-  }
+}
 
 }
 
 
 /* ========================================================
-   BOTONES R2 Y R3
+   EVENTOS
 ======================================================== */
 
 $("btn2").addEventListener(
 
-  "click",
+"click",
 
-  () =>
-    setDimension(2)
+() =>
+setDimension(2)
 
 );
 
 
 $("btn3").addEventListener(
 
-  "click",
+"click",
 
-  () =>
-    setDimension(3)
+() =>
+setDimension(3)
 
 );
 
-
-/* ========================================================
-   BOTÓN GRAFICAR
-======================================================== */
 
 $("draw").addEventListener(
 
-  "click",
+"click",
 
-  draw
+draw
 
 );
 
 
-/* ========================================================
-   DESLIZADOR
-======================================================== */
+/* DESLIZADOR */
 
 slider.addEventListener(
 
-  "input",
+"input",
 
-  () =>
-    updatePoint(true)
+()=>{
+
+updatePoint();
+
+}
 
 );
 
 
-/* ========================================================
-   ENTER PARA GRAFICAR
-======================================================== */
+/* RECTA TANGENTE */
+
+$("toggleTangent").addEventListener(
+
+"click",
+
+()=>{
+
+showTangent =
+!showTangent;
+
+
+updateGeometryButtons();
+
+updatePoint();
+
+}
+
+);
+
+
+/* PLANO / RECTA NORMAL */
+
+$("toggleNormal").addEventListener(
+
+"click",
+
+()=>{
+
+showNormal =
+!showNormal;
+
+
+updateGeometryButtons();
+
+updatePoint();
+
+}
+
+);
+
+
+/* ENTER */
 
 [
-  fx,
-  fy,
-  fz,
-  tmin,
-  tmax
+fx,
+fy,
+fz,
+tmin,
+tmax
 ]
 .forEach(
 
-  field => {
+field => {
 
-    field.addEventListener(
+field.addEventListener(
 
-      "keydown",
+"keydown",
 
-      event => {
+event => {
 
-        if(
-          event.key === "Enter"
-        ){
+if(
+event.key === "Enter"
+){
 
-          event.preventDefault();
+event.preventDefault();
 
-          draw();
+draw();
 
-        }
+}
 
-      }
+}
 
-    );
+);
 
-  }
+}
 
 );
 
@@ -2149,63 +2955,61 @@ slider.addEventListener(
 
 $("reset").addEventListener(
 
-  "click",
+"click",
 
-  () => {
+()=>{
 
-    if(
-      dimension === 3
-    ){
+if(
+dimension === 3
+){
 
-      Plotly.relayout(
+Plotly.relayout(
 
-        "plot",
+"plot",
 
-        {
+{
 
-          "scene.camera":{
+"scene.camera":{
 
-            eye:{
-              x:1.25,
-              y:1.25,
-              z:1.25
-            }
+eye:{
+x:1.25,
+y:1.25,
+z:1.25
+}
 
-          }
+}
 
-        }
+}
 
-      );
+);
 
-    }
+}
 
-    else{
+else{
 
-      Plotly.relayout(
+Plotly.relayout(
 
-        "plot",
+"plot",
 
-        {
+{
 
-          "xaxis.autorange":
-            true,
+"xaxis.autorange":true,
 
-          "yaxis.autorange":
-            true
+"yaxis.autorange":true
 
-        }
+}
 
-      );
+);
 
-    }
+}
 
-  }
+}
 
 );
 
 
 /* ========================================================
-   REAJUSTAR GRÁFICA AL CAMBIAR TAMAÑO DE PANTALLA
+   RESPONSIVE
 ======================================================== */
 
 let resizeTimer;
@@ -2213,66 +3017,56 @@ let resizeTimer;
 
 window.addEventListener(
 
-  "resize",
+"resize",
 
-  () => {
+()=>{
 
-    clearTimeout(
-      resizeTimer
-    );
+clearTimeout(
+resizeTimer
+);
 
 
-    resizeTimer =
-      setTimeout(
+resizeTimer =
+setTimeout(
 
-        () => {
+()=>{
 
-          if(
-            $("plot").data
-          ){
+Plotly.Plots.resize(
+$("plot")
+);
 
-            Plotly.Plots.resize(
-              $("plot")
-            );
+},
 
-          }
+120
 
-        },
+);
 
-        120
-
-      );
-
-  }
+}
 
 );
 
 
-/* ========================================================
-   CAMBIO DE ORIENTACIÓN
-======================================================== */
-
 window.addEventListener(
 
-  "orientationchange",
+"orientationchange",
 
-  () => {
+()=>{
 
-    setTimeout(
+setTimeout(
 
-      () => {
+()=>{
 
-        Plotly.Plots.resize(
-          $("plot")
-        );
+Plotly.Plots.resize(
+$("plot")
+);
 
-      },
+},
 
-      250
+250
 
-    );
+);
 
-  }
+}
 
 );
 
@@ -2283,34 +3077,36 @@ window.addEventListener(
 
 customElements
 .whenDefined(
-  "math-field"
+"math-field"
 )
 .then(
 
-  () => {
+()=>{
 
-    [
-      fx,
-      fy,
-      fz,
-      tmin,
-      tmax
-    ]
-    .forEach(
+[
+fx,
+fy,
+fz,
+tmin,
+tmax
+]
+.forEach(
 
-      field => {
+field => {
 
-        field.mathVirtualKeyboardPolicy =
-          "auto";
+field.mathVirtualKeyboardPolicy =
+"auto";
 
-      }
+}
 
-    );
+);
 
 
-    draw();
+updateGeometryButtons();
 
-  }
+draw();
+
+}
 
 );
 
