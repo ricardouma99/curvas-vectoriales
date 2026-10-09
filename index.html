@@ -589,29 +589,65 @@ Graficar
 
 <!-- EXPLORADOR -->
 
-<div>
+<!-- =====================================================
+     SELECCIÓN DEL PUNTO t0
+===================================================== -->
 
-<label for="slider">
-Punto de análisis t₀
-</label>
+<div class="geometry-panel">
 
-<input
-id="slider"
-type="range"
-min="0"
-max="1000"
-value="500">
+  <div class="geometry-title">
+    Punto de análisis
+  </div>
 
-<div id="tValue" class="small">
-t₀ = 0
-</div>
+  <label for="t0input">
+    Valor de t₀
+  </label>
+
+  <math-field id="t0input">
+    0
+  </math-field>
+
+  <button
+    id="applyT0"
+    type="button"
+    style="width:100%; margin-top:10px;">
+    Evaluar en t₀
+  </button>
+
+  <div
+    id="t0Message"
+    class="small"
+    style="margin-top:7px;">
+    Escribe un valor de t₀ perteneciente al intervalo.
+  </div>
+
+  <div style="margin-top:14px;">
+
+    <label for="slider">
+      Explorar t₀ con el deslizador
+    </label>
+
+    <input
+      id="slider"
+      type="range"
+      min="0"
+      max="1000"
+      value="500">
+
+    <div
+      id="tValue"
+      class="small">
+      t₀ = 0
+    </div>
+
+  </div>
 
 </div>
 
 
 <div id="coords" class="coords">
 
-<strong>P(t₀)</strong>
+  <strong>P(t₀)</strong>
 
 </div>
 
